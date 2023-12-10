@@ -15,7 +15,7 @@ function useApi(url, method = 'GET', body = null, headers = null) {
         const response = await axios({
           url, method, data: body, headers,
         });
-        setData(response.data.data);
+        setData(response.data.result);
       } catch (err) {
         setError(err);
       } finally {
