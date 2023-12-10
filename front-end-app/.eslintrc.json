@@ -15,6 +15,17 @@
     "sourceType": "module"
   },
   "plugins": ["react", "react-hooks", "jsx-a11y"],
-  "rules": { "import/no-unresolved" : "off" },
+  "rules": {
+    "import/no-unresolved" : "off",
+    "react/no-array-index-key": "off",
+    "react/prop-types" : "off",
+    "import/no-extraneous-dependencies" : "off",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function"
+      }
+    ]
+  },
   "settings": { "react": { "version": "detect" } }
 }
