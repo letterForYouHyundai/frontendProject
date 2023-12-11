@@ -18,7 +18,6 @@ const App = () => (
               key={index}
               path={route.path}
               element={<PageLayout><route.component /></PageLayout>}
-              exact={route?.exact}
             />
           ))}
         </Routes>
