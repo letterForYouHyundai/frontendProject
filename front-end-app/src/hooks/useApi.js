@@ -14,6 +14,8 @@ function useApi({
 
     const fetchData = async () => {
       try {
+        console.log(`Sending ${method} request to: ${url}`, { body, headers });
+
         const response = await axios({
           url, method, data: body, headers,
         });
