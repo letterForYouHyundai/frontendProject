@@ -25,7 +25,7 @@
       {
         "namedComponents": "arrow-function"
       }
-    ], "linebreak-style": ["error", "windows"],
+    ],
     "no-unused-vars": "off"
   },
   "settings": { "react": { "version": "detect" } }
