@@ -12,6 +12,7 @@ const routes = [
   { path: '/member/login', component: Member.LoginPage }, // 로그인
   { path: '/member/logout', component: Member.LogoutPage }, // 로그아웃
   { path: '/member/mypage', component: Member.MyPage }, // 마이페이지
+  { path: '/member/oauth', component: Member.OauthPage }, // 권한 인증후 로그인
 
   { path: '/board', component: Board.BoardListPage }, // 자유게시판 리스트
   { path: '/board/:id', component: Board.BoardDetailPage }, // 자유게시판 상세보기
