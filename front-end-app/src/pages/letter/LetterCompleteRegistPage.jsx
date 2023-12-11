@@ -1,8 +1,46 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import { UserContext } from 'contexts/UserContext';
 
 const LetterCompleteRegistPage = () => {
+  const { userInfo } = useContext(UserContext);
+
+  useEffect(() => {
+    const loadKakaoScript = () => {
+      const script = document.createElement('script');
+      script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+      script.async = true;
+
+      script.onload = () => {
+        window.Kakao.init(process.env.REACT_APP_JAVASCRIPT_KEY);
+        console.log(window.Kakao.isInitialized()); // Kakao SDK 초기화 상태 확인
+      };
+
+      document.body.appendChild(script);
+
+      return () => {
+        document.body.removeChild(script);
+      };
+    };
+
+    loadKakaoScript();
+  }, []);
+
   const handleSendMessage = () => {
-    console.log('a');
+    const javascriptKey = `${process.env.REACT_APP_JAVASCRIPT_KEY}`;
+    if (window.Kakao && userInfo && userInfo.accessToken) {
+      window.Kakao.init(javascriptKey);
+      window.Kakao.Auth.setAccessToken(userInfo.accessToken);
+      window.Kakao.Link.sendDefault({
+        objectType: 'text',
+        text: '카카오톡 메시지 전송 예시입니다.',
+        link: {
+          mobileWebUrl: 'https://your-url.com',
+          webUrl: 'https://your-url.com',
+        },
+      });
+    } else {
+      console.error('Kakao SDK not initialized or accessToken is missing.');
+    }
   };
 
   return (
@@ -10,7 +48,9 @@ const LetterCompleteRegistPage = () => {
       <h1>편지 작성이 완료되었습니다.</h1>
       <p>메세지 전송 url</p>
       <input value="" placeholder="메세지 전송 url" type="text" />
-      <button type="button" onClick={handleSendMessage}>카카오톡으로 메세지 전송하기</button>
+      <button type="button" onClick={handleSendMessage}>
+        카카오톡으로 메세지 전송하기
+      </button>
     </>
   );
 };
