@@ -4,10 +4,7 @@ import Button from '@mui/material/Button';
 import useApi from 'hooks/useApi';
 
 const LoginPage = () => {
-  const CLIENT_ID = 'ad117e5251ddb446c15d829ce0967079';
-  const REDIRECT_URI = 'http://localhost:3000/';
-  const kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
+  const kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_MAIN_REDIRECT_URI}&response_type=code`;
   const [userInfo, setUserInfo] = useState(null);
   const [apiCall, setApiCall] = useState({
     url: '',
