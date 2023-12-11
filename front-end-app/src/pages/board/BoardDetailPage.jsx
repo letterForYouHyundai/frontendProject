@@ -7,7 +7,7 @@ import useApi from 'hooks/useApi';
 const BoardDetail = () => {
   const { id } = useParams();
 
-  const { data, isLoading, error } = useApi(`/board/${id}`, 'GET');
+  const { data, isLoading, error } = useApi({ url: `/board/${id}`, method: 'GET' });
 
   if (isLoading) return <p>Loading...</p>;
   if (error) {

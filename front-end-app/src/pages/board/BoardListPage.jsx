@@ -3,7 +3,7 @@ import useApi from 'hooks/useApi';
 import { Link } from 'react-router-dom';
 
 const BoardListPage = () => {
-  const { data, isLoading, error } = useApi('/board/list', 'GET');
+  const { data, isLoading, error } = useApi({ url: '/board/list', method: 'GET' });
 
   if (isLoading) return <p>Loading...</p>;
   if (error) {

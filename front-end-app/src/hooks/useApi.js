@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function useApi(url, method = 'GET', body = null, headers = null) {
+function useApi({
+  url, method = 'GET', body = null, headers = null,
+}) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -22,8 +24,8 @@ function useApi(url, method = 'GET', body = null, headers = null) {
         setIsLoading(false);
       }
     };
-
-    fetchData();
+    if (url) fetchData();
+    else setIsLoading(false);
   }, [url, method, body, headers]);
 
   return { data, isLoading, error };
