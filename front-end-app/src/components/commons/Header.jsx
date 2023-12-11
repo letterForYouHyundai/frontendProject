@@ -49,7 +49,7 @@ const Header = () => {
               </H.TextWrapper>
               <H.BigTextWrapper>
                 <H.StyledNavLink
-                  to="/member/logout"
+                  to="/member/oauthout"
                 >
                   로그아웃
                 </H.StyledNavLink>

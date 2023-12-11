@@ -12,7 +12,7 @@ const OauthOutPage = () => {
     headers: null,
   });
   const { userInfo, setUserInfo } = useContext(UserContext);
-  const { data, loading, error } = useApi({ ...apiCall });
+  const { data } = useApi({ ...apiCall });
 
   const handleLogout = () => {
     // 로그아웃 요청 보내기
@@ -20,13 +20,14 @@ const OauthOutPage = () => {
   };
 
   useEffect(() => {
+    handleLogout();
     if (data != null || data === undefined) {
-      console.log(data);
       console.log('로그아웃 성공');
       sessionStorage.removeItem('userInfo');
       setUserInfo(null);
       navigate('/');
     }
-  }, [data]);
+  }, [data, navigate, setUserInfo]);
 };
+
 export default OauthOutPage;
