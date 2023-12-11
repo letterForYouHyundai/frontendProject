@@ -1,5 +1,12 @@
 // HeaderStyles.js
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+
+export const StyledNavLink = styled(NavLink)`
+  /* Default NavLink style */
+  color: #000; // Example default color
+  text-decoration: none;
+`;
 
 export const DivWrapper = styled.div`
   background-color: var(--j-i9-zww);
