@@ -1,57 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Input from 'components/commons/Input';
 import Button from '@mui/material/Button';
 import useApi from 'hooks/useApi';
 
 const LoginPage = () => {
-  console.log('aaa');
+  const CLIENT_ID = 'ad117e5251ddb446c15d829ce0967079';
+  const REDIRECT_URI = 'http://localhost:3000/';
+  const kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
-  // const CLIENT_ID = 'ad117e5251ddb446c15d829ce0967079';
-  // const REDIRECT_URI = 'http://localhost:8081/api/member/kakaoLoginPage';
-  // const kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  // const code = '';
-
-  // function loginTest() {
-  //   window.location.href = kakaoLoginURL;
-  // }
-
+  const [userInfo, setUserInfo] = useState(null);
   const [apiCall, setApiCall] = useState({
-    url: '', method: 'GET', body: null, headers: null,
-  }); // API 호출에 사용할 URL
-  const { data } = useApi({ ...apiCall });
+    url: '',
+    method: 'GET',
+    body: null,
+    headers: null,
+  });
+  const { data, loading, error } = useApi({ ...apiCall });
 
-  // 버튼 클릭 핸들러: API 엔드포인트 URL을 설정
-
-  const handleLogin = () => {
-    console.log(data);
+  const activeLogin = () => {
     setApiCall({ ...apiCall, url: '/member/kakaoLogin' });
-    // $.ajax({
-    //   url: '/api/member/kakaoLogin',
-    //   data: { code },
-    //   type: 'GET',
-    //   success: function onData(data) {
-    //     // 예시: 사용자 정보 출력
-    //     const { userInfo } = data;
-    //       console.log(data);
-    //       if (userInfo) {
-    //       const userInfoDiv = document.getElementById('userInfo');
-    //       console.log(userInfo);
-    //       userInfoDiv.innerText = `Welcome, ${userInfo.userNickname}`;
-    //       userInfoDiv.style.display = 'block'; // 닉네임이 있는 경우 해당 div 보이도록 설정
-    //     }
-    //   },
-    //   error: function onError(error) {
-    //     console.error(error);
-    //   },
-    // });
   };
 
+  const handleLogin = () => {
+    window.location.href = kakaoLoginURL;
+  };
+
+  useEffect(() => {
+    const userInfoFromSession = JSON.parse(sessionStorage.getItem('userInfo'));
+    if (userInfoFromSession) {
+      setUserInfo(userInfoFromSession);
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    if (code) {
+      console.log(code);
+      activeLogin();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (data && data.status === 200) {
+      sessionStorage.setItem('userInfo', JSON.stringify(data));
+      setUserInfo(data);
+    }
+  }, [data]);
+
   return (
-    <>
+    <div>
       <Input label="이메일" />
       <Input label="비밀번호" type="password" />
-      <Button variant="outlined" onClick={handleLogin}>로그인</Button>
-    </>
+      <Button variant="outlined" onClick={handleLogin}>
+        카카오 로그인
+      </Button>
+    </div>
   );
 };
 
