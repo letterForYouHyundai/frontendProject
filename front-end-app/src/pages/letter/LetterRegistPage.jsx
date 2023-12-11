@@ -16,6 +16,8 @@ const LetterRegistPage = () => {
   //   if (!userInfo) {
   //     navigate('/member/login'); // '/member/login'으로 이동
   //     // navigate(-1); // 이전 페이지로 이동
+  //     // 다음 페이지에 파라미터 넘기는 것도 가능, useLocation을 사용해서 넘어간 페이지에서 파라미터 확인 가능
+  //     // navigate('/next-page', { state: { param1: 'value1', param2: 'value2' } });
   //   }
   // }, []);
 
