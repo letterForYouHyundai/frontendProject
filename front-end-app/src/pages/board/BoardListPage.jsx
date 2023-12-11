@@ -2,10 +2,8 @@ import React from 'react';
 import useApi from 'hooks/useApi';
 import { Link } from 'react-router-dom';
 
-const apiUrl = process.env.REACT_APP_API_URL;
-
 const BoardListPage = () => {
-  const { data, isLoading, error } = useApi({ url: `${apiUrl}/board/list`, method: 'GET' });
+  const { data, isLoading, error } = useApi({ url: '/board/list', method: 'GET' });
 
   if (isLoading) return <p>Loading...</p>;
   if (error) {
@@ -19,7 +17,6 @@ const BoardListPage = () => {
   return (
     <div>
       <h1>API 통신 호출 확인</h1>
-
       {data ? (
         <ul>
           {data?.boardList?.map((item) => (

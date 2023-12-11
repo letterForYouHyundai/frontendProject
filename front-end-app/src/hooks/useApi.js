@@ -14,12 +14,10 @@ function useApi({
 
     const fetchData = async () => {
       try {
-        console.log(`Sending ${method} request to: ${url}`, { body, headers });
-
         const response = await axios({
           url, method, data: body, headers,
         });
-        setData(response.data.result);
+        setData(response.data);
       } catch (err) {
         setError(err);
       } finally {
