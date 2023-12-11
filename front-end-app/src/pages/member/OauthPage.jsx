@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import useApi from 'hooks/useApi';
 import { UserContext } from 'contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const OauthPage = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
+  const navigate = useNavigate();
   const [apiCall, setApiCall] = useState({
     url: '',
     method: 'GET',
@@ -21,6 +23,7 @@ const OauthPage = () => {
     const userInfoFromSession = JSON.parse(sessionStorage.getItem('userInfo'));
     if (userInfoFromSession) {
       setUserInfo(userInfoFromSession);
+      navigate('/');
     }
 
     const urlParams = new URLSearchParams(window.location.search);

@@ -3,7 +3,7 @@ import useApi from 'hooks/useApi';
 import { UserContext } from 'contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 
-const LogoutPage = () => {
+const OauthOutPage = () => {
   const navigate = useNavigate();
   const [apiCall, setApiCall] = useState({
     url: '',
@@ -28,15 +28,5 @@ const LogoutPage = () => {
       navigate('/');
     }
   }, [data]);
-
-  return (
-    <>
-      <h1>로그아웃 페이지입니다</h1>
-      <button type="button" onClick={handleLogout}>
-        로그아웃
-      </button>
-    </>
-  );
 };
-
-export default LogoutPage;
+export default OauthOutPage;
