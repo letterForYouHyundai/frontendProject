@@ -10,6 +10,7 @@ const routes = [
   { path: '/', component: MainPage }, // 홈페이지
 
   { path: '/member/login', component: Member.LoginPage }, // 로그인
+  { path: '/member/logout', component: Member.LogoutPage }, // 로그아웃
   { path: '/member/mypage', component: Member.MyPage }, // 마이페이지
 
   { path: '/board', component: Board.BoardListPage }, // 자유게시판 리스트
