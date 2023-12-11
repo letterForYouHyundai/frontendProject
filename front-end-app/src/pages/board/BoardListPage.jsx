@@ -20,7 +20,7 @@ const BoardListPage = () => {
       <h1>API 통신 호출 확인</h1>
       {data ? (
         <ul>
-          {data?.boardList?.map((item) => (
+          {data?.result.boardList?.map((item) => (
             <li key={item.boardNo}>
               <p>
                 {`BoardNo: ${item.boardNo}`}

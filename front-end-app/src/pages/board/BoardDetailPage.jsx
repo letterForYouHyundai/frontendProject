@@ -24,7 +24,7 @@ const BoardDetail = () => {
     <div>
       <h1>게시물 상세 페이지</h1>
       <p>{`게시물 ID: ${id}`}</p>
-      <p>{`boardTitle: ${data.result?.boardTitle}`}</p>
+      <p>{`boardTitle: ${data?.boardTitle}`}</p>
       <p>{`userNickname: ${data?.userNickname}`}</p>
       <p>
         attachList:
