@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Input from 'components/commons/Input';
 import Button from '@mui/material/Button';
 import useApi from 'hooks/useApi';
+import { UserContext } from 'contexts/UserContext';
 
 const LoginPage = () => {
   const kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_MAIN_REDIRECT_URI}&response_type=code`;
-  const [userInfo, setUserInfo] = useState(null);
+  // const [userInfo, setUserInfo] = useState(null);
+  const { userInfo, setUserInfo } = useContext(UserContext);
   const [apiCall, setApiCall] = useState({
     url: '',
     method: 'GET',
