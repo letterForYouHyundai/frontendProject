@@ -1,6 +1,7 @@
 // HeaderStyles.js
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import 'assets/fonts/fonts.css';
 
 export const StyledNavLink = styled(NavLink)`
   /* Default NavLink style */
@@ -9,88 +10,44 @@ export const StyledNavLink = styled(NavLink)`
 `;
 
 export const DivWrapper = styled.div`
-  background-color: var(--j-i9-zww);
-  height: 120px;
+  width: 100%;
+  height: 7.5rem;
+  background-color: var(--basic-background-color);
   position: relative;
-  width: 100%; // Set to full width
-
-  @media (max-width: 768px) {
-    height: 80px; // Adjust height for smaller screens
-  }
 `;
 
-export const VectorImg = styled.img`
-  height: 1px;
-  left: 135px;
-  object-fit: cover;
-  position: absolute;
-  top: 120px;
-  width: 1650px;
+export const Image = styled.img`
+  width: 10rem;
+  height: auto;
+`;
+
+export const DivContentWrapper = styled.div`
+  width: 80%;
+  height: 100%;
+  margin: auto;
+  border-bottom: 1px solid black;
+  display: flex;
+  align-items: center;
+`;
+
+export const CenteredImgWrapper = styled.div`
+  margin: auto; // 가운데 정렬을 위한 속성
+`;
+
+export const LeftAlignedDiv = styled.div`
+  display: flex;
+  align-items: flex-start;
+  margin-left: auto;
 `;
 
 export const TextWrapper = styled.div`
   color: #000000;
-  font-family: "GungSeo-Regular", Helvetica;
-  font-size: 48px;
+  font-family: 'namum-myeongjo-regular', Helvetica;
+  font-size: 1.25rem;
   font-weight: 400;
-  height: 48px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: center;
-  white-space: nowrap;
-  left: 50%;
-  transform: translateX(-50%); // Center align on all screen sizes
-
-  @media (max-width: 768px) {
-    font-size: 24px; // Smaller font for smaller screens
-  }
+  margin-right: 1rem;
 `;
 
-export const DivText = styled.div`
-  color: #000000;
-  font-family: "GungSeo-Regular", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  height: 20px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: center;
-  top: 48px;
-  white-space: nowrap;
-  left: calc(50% + 200px); // Adjust based on screen size
-
-  @media (max-width: 1024px) {
-    left: calc(50% + 100px); // Adjust position for medium screens
-  }
-
-  @media (max-width: 768px) {
-    left: calc(50% + 50px); // Adjust position for small screens
-    font-size: 16px; // Smaller font for smaller screens
-  }
-`;
-
-// ... similar adjustments for other styled components
-
-export const Ellipse = styled.div`
-  // ... Ellipse styles
-  // Adjust position or size as needed for responsiveness
-`;
-
-export const LoginText = styled(DivText)`
-  font-size: 1.5rem; // Using rem instead of px
-  left: calc(100% - 117px); // Example of using percentage with a slight adjustment
-`;
-
-export const TemplateText = styled(DivText)`
-  left: 75%; // Adjusted to percentage
-`;
-
-export const MyPageText = styled(DivText)`
-  left: 85%; // Adjusted to percentage
-`;
-
-export const LetterWriteText = styled(DivText)`
-  left: 68%; // Adjusted to percentage
+export const BigTextWrapper = styled(TextWrapper)`
+font-family: 'namum-myeongjo-bold', Helvetica;
 `;
