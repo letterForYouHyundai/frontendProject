@@ -6,6 +6,7 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import routes from 'routes/routes';
 import PageLayout from 'pages/PageLayout';
 import UserProvider from 'contexts/UserContext';
+import GlobalStyles from 'styles/globalStyles';
 
 const muiTheme = createTheme();
 
@@ -14,6 +15,7 @@ const App = () => (
     <MuiThemeProvider theme={muiTheme}>
       <StyledThemeProvider theme={muiTheme}>
         <Router>
+          <GlobalStyles />
           <Routes>
             {routes.map((route, index) => (
               <Route
