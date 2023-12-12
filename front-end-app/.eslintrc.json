@@ -26,7 +26,6 @@
         "namedComponents": "arrow-function"
       }
     ],
-    "linebreak-style": ["error", "windows"],
     "no-unused-vars": "off",
     "max-len": "off"
   },
