@@ -10,6 +10,7 @@ const LogoutPage = () => {
     method: 'GET',
     body: null,
     headers: null,
+    useNav: false,
   });
   const { userInfo, setUserInfo } = useContext(UserContext);
   const { data, loading, error } = useApi({ ...apiCall });
@@ -23,11 +24,16 @@ const LogoutPage = () => {
     if (data != null || data === undefined) {
       console.log(data);
       console.log('로그아웃 성공');
-      sessionStorage.removeItem('userInfo');
+      localStorage.removeItem('userInfo');
       setUserInfo(null);
-      navigate('/');
     }
   }, [data]);
+
+  useEffect(() => {
+    if (userInfo === null) {
+      navigate('/');
+    }
+  }, [userInfo]);
 
   return (
     <>

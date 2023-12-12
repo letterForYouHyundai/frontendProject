@@ -3,26 +3,6 @@ import reset from 'styled-reset';
 
 const GlobalStyles = createGlobalStyle` 
   ${reset}
-
-  @font-face {
-    font-family: 'song-myung'; /* 폰트 이름을 원하는대로 설정하세요 */
-    src: url('../assets/fonts/Song_Myung/SongMyung-Regular.ttf') format('truetype'); /* 폰트 파일 경로를 정확하게 지정하세요 */
-  }
-  
-  @font-face {
-    font-family: 'namum-myeongjo-regular'; 
-    src: url('../assets/fonts/Nanum_Myeongjo/NanumMyeongjo-Regular.ttf') format('truetype');
-  }
-  
-  @font-face {
-    font-family: 'namum-myeongjo-bold'; 
-    src: url('../assets/fonts/Nanum_Myeongjo/NanumMyeongjo-Bold.ttf') format('truetype');
-  }
-  
-  @font-face {
-    font-family: 'namum-myeongjo-ExtraBold'; 
-    src: url('../assets/fonts/Nanum_Myeongjo/NanumMyeongjo-ExtraBold.ttf') format('truetype');
-  }
   
   :root {
     font-size: 16px;

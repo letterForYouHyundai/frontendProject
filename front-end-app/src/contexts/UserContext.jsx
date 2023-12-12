@@ -3,7 +3,8 @@ import React, { useMemo, useState, createContext } from 'react';
 export const UserContext = createContext(null);
 
 const UserProvider = ({ children }) => {
-  const [userInfo, setUserInfo] = useState();
+  const localStorageUser = localStorage.getItem('userInfo');
+  const [userInfo, setUserInfo] = useState(localStorageUser ? JSON.parse(localStorageUser) : undefined);
   const value = useMemo(() => ({
     userInfo,
     setUserInfo,

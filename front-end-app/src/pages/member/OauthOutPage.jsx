@@ -16,18 +16,24 @@ const OauthOutPage = () => {
 
   const handleLogout = () => {
     // 로그아웃 요청 보내기
-    setApiCall({ ...apiCall, url: '/member/kakaoLogout' });
+    setApiCall({
+      ...apiCall,
+      url: '/member/kakaoLogout',
+    });
   };
 
   useEffect(() => {
     handleLogout();
     if (data != null || data === undefined) {
       console.log('로그아웃 성공');
-      sessionStorage.removeItem('userInfo');
+      localStorage.removeItem('userInfo');
       setUserInfo(null);
-      navigate('/');
     }
-  }, [data, navigate, setUserInfo]);
+  }, [data]);
+
+  useEffect(() => {
+    if (!userInfo) navigate('/');
+  }, [userInfo]);
 };
 
 export default OauthOutPage;

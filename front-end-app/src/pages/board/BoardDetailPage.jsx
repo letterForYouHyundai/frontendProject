@@ -10,13 +10,6 @@ const BoardDetail = () => {
   const { data, isLoading, error } = useApi({ url: `/board/${id}`, method: 'GET' });
 
   if (isLoading) return <p>Loading...</p>;
-  if (error) {
-    return (
-      <p>
-        {`Error occurred: ${error.message}`}
-      </p>
-    );
-  }
 
   return (
     <div>

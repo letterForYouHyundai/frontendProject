@@ -11,39 +11,40 @@ const OauthPage = () => {
     method: 'GET',
     body: null,
     headers: null,
+    useNav: false,
   });
   const { data, loading, error } = useApi({ ...apiCall });
-  let code;
 
-  const activeLogin = () => {
+  const activeLogin = (code) => {
     setApiCall({ ...apiCall, url: `/member/kakaoLogin?code=${code}` });
   };
 
   useEffect(() => {
-    const userInfoFromSession = JSON.parse(sessionStorage.getItem('userInfo'));
+    const localStorageUser = localStorage.getItem('userInfo');
+    const userInfoFromSession = localStorageUser ? JSON.parse(localStorageUser) : undefined;
+
     if (userInfoFromSession) {
       setUserInfo(userInfoFromSession);
-      navigate('/');
+    } else {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      if (code) {
+        activeLogin(code);
+      }
     }
-
-    const urlParams = new URLSearchParams(window.location.search);
-    code = urlParams.get('code');
-    if (code) {
-      activeLogin();
-    }
-  }, [setUserInfo]);
+  }, []);
 
   useEffect(() => {
     if (data != null || data === undefined) {
-      // console.log('data.userInfo:', data.userInfo); // 받은 데이터 로그로 확인
-    }
-
-    if (data != null || data === undefined) {
-      const extractedUserInfo = data.userInfo;
-      sessionStorage.setItem('userInfo', JSON.stringify(extractedUserInfo));
+      const extractedUserInfo = data;
+      localStorage.setItem('userInfo', JSON.stringify(extractedUserInfo));
       setUserInfo(extractedUserInfo);
     }
-  }, [data, setUserInfo]);
+  }, [data]);
+
+  useEffect(() => {
+    if (userInfo) { navigate('/'); }
+  }, [userInfo]);
 };
 
 export default OauthPage;
