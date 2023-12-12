@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from 'components/commons/Header';
+import { WrapperDiv, ContentDiv } from 'styles/components/commons/WrapperStyles';
 
 const PageLayout = ({ children }) => (
-  <div>
-    <Header />
-    {children}
-  </div>
+  <WrapperDiv>
+    <ContentDiv>
+      <Header />
+      {children}
+    </ContentDiv>
+  </WrapperDiv>
 );
 
 PageLayout.propTypes = {

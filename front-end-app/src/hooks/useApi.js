@@ -17,8 +17,11 @@ function useApi({
         const response = await axios({
           url, method, data: body, headers,
         });
-        console.log('response');
-        console.log(response);
+        console.log(`url : ${url}`);
+        console.log(`method : ${method}`);
+        console.log(`body : ${body}`);
+        console.log(`headers : ${headers}`);
+        console.log(`response : ${response}`);
         setData(response.data);
       } catch (err) {
         setError(err);

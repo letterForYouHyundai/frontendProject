@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import 'assets/fonts/fonts.css';
+import { WrapperDiv, ContentDiv } from 'styles/components/commons/WrapperStyles';
 
 export const StyledNavLink = styled(NavLink)`
   /* Default NavLink style */
@@ -10,7 +11,6 @@ export const StyledNavLink = styled(NavLink)`
 `;
 
 export const DivWrapper = styled.div`
-  width: 100%;
   height: 7.5rem;
   background-color: var(--basic-background-color);
   position: relative;
@@ -22,7 +22,6 @@ export const Image = styled.img`
 `;
 
 export const DivContentWrapper = styled.div`
-  width: 80%;
   height: 100%;
   margin: auto;
   border-bottom: 1px solid black;
