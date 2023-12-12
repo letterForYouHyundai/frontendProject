@@ -3,7 +3,7 @@ import { UserContext } from 'contexts/UserContext';
 
 const LetterCompleteRegistPage = () => {
   const { userInfo } = useContext(UserContext);
-
+  const javascriptKey = `${process.env.REACT_APP_JAVASCRIPT_KEY}`;
   useEffect(() => {
     const loadKakaoScript = () => {
       const script = document.createElement('script');
@@ -11,8 +11,9 @@ const LetterCompleteRegistPage = () => {
       script.async = true;
 
       script.onload = () => {
-        window.Kakao.init(process.env.REACT_APP_JAVASCRIPT_KEY);
+        window.Kakao.init(javascriptKey);
         console.log(window.Kakao.isInitialized()); // Kakao SDK 초기화 상태 확인
+        window.Kakao.Auth.setAccessToken(userInfo.accessToken);
       };
 
       document.body.appendChild(script);
@@ -26,16 +27,13 @@ const LetterCompleteRegistPage = () => {
   }, []);
 
   const handleSendMessage = () => {
-    const javascriptKey = `${process.env.REACT_APP_JAVASCRIPT_KEY}`;
     if (window.Kakao && userInfo && userInfo.accessToken) {
-      window.Kakao.init(javascriptKey);
-      window.Kakao.Auth.setAccessToken(userInfo.accessToken);
       window.Kakao.Link.sendDefault({
         objectType: 'text',
         text: '카카오톡 메시지 전송 예시입니다.',
         link: {
-          mobileWebUrl: 'https://your-url.com',
-          webUrl: 'https://your-url.com',
+          mobileWebUrl: 'https://naver.com',
+          webUrl: 'https://naver.com',
         },
       });
     } else {
