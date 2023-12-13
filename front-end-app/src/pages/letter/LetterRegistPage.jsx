@@ -13,7 +13,12 @@ const LetterRegistPage = () => {
   const [userName, setUserName] = useState('');
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
+  const [receiveEmail, setReceiveEmail] = useState('');
+  const [memberYn, setMemberYn] = useState('');
+
+  // color
   const [colorInfo, setColorInfo] = useState({
+    colorNo: 1,
     name: 'Viva Magenta',
     hex: '#BB2749',
     rgb: '(187, 39, 73)',
@@ -27,12 +32,38 @@ const LetterRegistPage = () => {
     useNav: false,
   });
   const { data, isLoading, error } = useApi({ ...apiCall });
+
   const handleComplete = () => {
+    if (!title.trim()) {
+    // content나 title이 null이거나 공백인 경우 처리할 로직 작성
+      alert(' Title을 입력해주세요.');
+      return;
+    }
+    if (!content.trim()) {
+      alert(' 편지 내용을 입력해주세요.');
+      return;
+    }
+    // 보내는 대상의 이름을 입력해주세요.
+    if (!userName === null) {
+      alert('보내는 대상의 이름을 입력해주세요.');
+      return;
+    }
+    // 나중에 validation check박스 추가시 있는 경우에는 아이디 validation 체크
+    /* if (memberYn === null) {
+      alert('보내는 대상이 회원인지 조회해주세요.');
+      return;
+    }
+    if (memberYn === 'N') {
+      alert('보내는 대상이 회원이 아닙니다.');
+      return;
+    } */
+
     const letterData = {
       letterTitle: title,
       letterContent: content,
-      letterSendId: userName,
-      letterColorNo: colorInfo.hex,
+      // letterSendId: userName,
+      userAlias: userName, // receiveUserAlias
+      letterColorNo: colorInfo.colorNo,
     };
 
     setApiCall((prev) => ({
@@ -51,6 +82,29 @@ const LetterRegistPage = () => {
       // navigate('/next-page', { state: { param1: 'value1', param2: 'value2' } });
     }
   }, []);
+
+  useEffect(() => {
+    if (data != null || data === undefined) {
+      console.log('회원여부 조회 성공');
+      console.log(data);
+      if (data.checkMemberYn === 'N') {
+        setMemberYn('N');
+      } else {
+        setMemberYn('Y');
+      }
+    }
+  }, [data]);
+
+  useEffect(() => {
+
+  }, [receiveEmail]);
+  // 멤버인지 여부를 체크한다.
+  const checkMemberYn = () => {
+    // console.log(`receiveEmail:  ${receiveEmail}`);
+    // 이후에 회원아이디가 변경되면 해당 설정 추가
+    setMemberYn('N');
+    setApiCall({ ...apiCall, method: 'GET', url: '/member/checkMemberYn?userEmail=2345' });
+  };
 
   //  private String letterNo; 편지 번호
   //  private String letterReceiveId; 편지 수신 아이디
@@ -87,6 +141,7 @@ const LetterRegistPage = () => {
       <DraggableColorPicker onPickerClick={handlePickerClick} />
       <LetterTemplate from={false} title={title} content={content} userName={userName} colorInfo={colorInfo} onChangeTitle={handleTitleText} onChangeContent={handleContentText} onChangeUser={handleUserText} />
       <MyButton type="button" onClick={handleComplete} variant="outlined">편지 작성 완료</MyButton>
+      <MyButton type="button" onClick={checkMemberYn} variant="outlined">회원 여부 조회</MyButton>
     </>
   );
 };
