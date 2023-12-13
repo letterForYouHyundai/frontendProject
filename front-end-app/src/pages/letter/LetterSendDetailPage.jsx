@@ -17,9 +17,36 @@ const LetterSendDetailPage = () => {
     rgb: '(187, 39, 73)',
     textColor: 'white',
   });
+
+  const currentURL = window.location.href;
+  const [apiCall, setApiCall] = useState({
+    url: '',
+    method: 'GET',
+    body: null,
+    headers: null,
+    useNav: false,
+  });
+  const { data, loading, error } = useApi({ ...apiCall });
+
+  const readLetterData = () => {
+    setApiCall({ ...apiCall, url: `${currentURL}` });
+  };
   const handleBack = () => {
     navigate(-1);
   };
+  useEffect(() => {
+    readLetterData();
+  }, []);
+
+  useEffect(() => {
+    if (data != null || data === undefined) {
+      setTitle(data.letterDTO.letterTitle);
+      setContent(data.letterDTO.letterContent);
+      setUserName(data.letterDTO.receiverNickname);
+      setColorInfo(data.letterDTO.colorPalette.colorHex);
+    }
+  }, [data]);
+
   return (
     <>
       <Page.TitleText>보낸 편지함</Page.TitleText>

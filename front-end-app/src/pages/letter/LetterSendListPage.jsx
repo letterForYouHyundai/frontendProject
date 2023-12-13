@@ -14,7 +14,7 @@ const LetterSendListPage = () => {
     <>
       <Page.TitleText>보낸 편지함</Page.TitleText>
       <Page.PageTemplate>
-        <LetterMiniTemplate text="To.ljy" pickerColor="red" onClick={() => handleClickLetter('575')} />
+        <LetterMiniTemplate text="To.ljy" pickerColor="red" onClick={() => handleClickLetter('iT4x7iD7GbzG3y6Mb9CnhQ==')} />
         <LetterMiniTemplate text="To.jk" pickerColor="blue" onClick={() => handleClickLetter('600')} />
         <LetterMiniTemplate text="To.es" pickerColor="green" onClick={() => handleClickLetter('601')} />
       </Page.PageTemplate>
