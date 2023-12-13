@@ -13,5 +13,5 @@ color: black;
  font-size: 3rem;
  word-wrap: break-word;
  text-align: center;
- margin-top: 2rem;
+ margin: 2rem;
 `;
