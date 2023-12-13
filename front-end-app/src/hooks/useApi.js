@@ -21,14 +21,14 @@ function useApi({
         });
 
         // 개발용 로그
-        // console.log(`url : ${url}`);
+        console.log(`url : ${url}`);
         // console.log(`method : ${method}`);
         // console.log('====== body ======');
-        // console.log(body);
+        console.log(body);
         // console.log('====== headers ======');
-        // console.log(headers);
+        console.log(headers);
         // console.log('====== response ======');
-        // console.log(response);
+        console.log(response);
 
         if (response.data.code === 200 && response.data.status) setData(response.data.result);
         else {

@@ -7,7 +7,7 @@ import LetterTemplate from 'components/letter/LetterTemplate';
 const LetterRegistPage = () => {
   const { userInfo } = useContext(UserContext);
   const navigate = useNavigate();
-  const { data, isLoading, error } = useApi({ url: '', method: 'GET' });
+
   const [userName, setUserName] = useState('');
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
@@ -19,8 +19,9 @@ const LetterRegistPage = () => {
     headers: null,
     useNav: false,
   });
-
+  const { data, isLoading, error } = useApi({ ...apiCall });
   const handleComplete = () => {
+    console.log('test');
     const letterData = {
       letterTitle: title,
       letterContent: content,
@@ -28,11 +29,12 @@ const LetterRegistPage = () => {
       letterColorNo: 'RGB: (108,191,195)',
     };
 
-    setApiCall({
+    setApiCall((prev) => ({
+      ...prev,
       url: '/letter/insertLetter',
       method: 'POST',
       body: letterData,
-    });
+    }));
   };
   // 로그인 안했을 경우 자동으로 로그인 페이지로 이동
   useEffect(() => {
