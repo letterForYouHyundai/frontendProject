@@ -10,11 +10,15 @@
 }
 
 .board-list th, .board-list td {
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
   padding: 0.5rem;
   text-align: left;
   vertical-align: middle;
+}
+.board-list thead th {
+  background-color: lightgray;
+  font-weight: bold;
 }
 
 .board-list th {
@@ -33,10 +37,6 @@
 
 .board-list tr:nth-child(even) {
   background-color: #f2f2f2;
-}
-
-.board-list thead th {
-  border-top: none;
 }
 
 .board-list tr:hover {

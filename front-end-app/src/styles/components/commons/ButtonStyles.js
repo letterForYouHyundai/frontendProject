@@ -18,5 +18,11 @@ export const FillButton = styled(Button)`
     color: white;
     border-radius: 0;
     background-color: black;
+    width: 31.25rem;
+    height: 3.75rem;
+    font-family: 'namum-myeongjo-regular', Helvetica;
+    &:hover {
+      border: 1px solid black;
+    }
   }
 `;
