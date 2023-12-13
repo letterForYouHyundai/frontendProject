@@ -15,6 +15,8 @@ const LetterRegistPage = () => {
   const [title, setTitle] = useState('');
   const [receiveEmail, setReceiveEmail] = useState('');
   const [memberYn, setMemberYn] = useState('');
+  const [letterUrl, setLetterUrl] = useState('');
+  const [letterNo, setLetterNo] = useState('');
 
   // color
   const [colorInfo, setColorInfo] = useState({
@@ -92,8 +94,20 @@ const LetterRegistPage = () => {
       } else {
         setMemberYn('Y');
       }
+      if (data.letterUrl != null && data.letterUrl !== undefined) {
+        setLetterUrl(data.letterUrl);
+      }
+      if (data.letterNo != null && data.letterNo !== undefined) {
+        setLetterNo(data.letterNo);
+      }
     }
   }, [data]);
+  useEffect(() => {
+    if (letterUrl !== null && letterUrl !== undefined && letterUrl !== '' && letterNo !== null && letterNo !== undefined && letterNo !== '') {
+      console.log(`Navigating to /letter/complete with letterUrl: ${letterUrl} and letterNo: ${letterNo}`);
+      navigate('/letter/complete', { state: { letterUrl, letterNo } });
+    }
+  }, [letterUrl, letterNo]);
 
   useEffect(() => {
 
