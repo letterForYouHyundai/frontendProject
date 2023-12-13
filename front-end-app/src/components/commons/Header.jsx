@@ -1,12 +1,23 @@
 // Header.jsx
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import * as H from 'styles/components/commons/HeaderStyles';
 import { UserContext } from 'contexts/UserContext';
 import Letter4U from 'assets/image/Letter4U.png';
 
 const Header = () => {
   const { userInfo } = useContext(UserContext);
+  useEffect(() => {
+    const clearLocalStorage = () => {
+      localStorage.clear(); // window on load시 localStorage를 클리어합니다.
+    };
+
+    window.addEventListener('load', clearLocalStorage);
+
+    return () => {
+      window.removeEventListener('load', clearLocalStorage);
+    };
+  }, []);
 
   return (
     <H.DivWrapper>
