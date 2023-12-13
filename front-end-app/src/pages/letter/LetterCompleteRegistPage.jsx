@@ -4,6 +4,7 @@ import { UserContext } from 'contexts/UserContext';
 const LetterCompleteRegistPage = () => {
   const { userInfo } = useContext(UserContext);
   const javascriptKey = `${process.env.REACT_APP_JAVASCRIPT_KEY}`;
+  const key = 600;
   useEffect(() => {
     const loadKakaoScript = () => {
       const script = document.createElement('script');
@@ -28,12 +29,12 @@ const LetterCompleteRegistPage = () => {
 
   const handleSendMessage = () => {
     if (window.Kakao && userInfo && userInfo.accessToken) {
-      window.Kakao.Link.sendDefault({
-        objectType: 'text',
-        text: '카카오톡 메시지 전송 예시입니다.',
-        link: {
-          mobileWebUrl: 'https://naver.com',
-          webUrl: 'https://naver.com',
+      window.Kakao.Share.sendCustom({
+        templateId: 101767,
+        templateArgs: {
+          title: '제목 영역입니다.',
+          description: '설명 영역입니다.',
+          key,
         },
       });
     } else {
