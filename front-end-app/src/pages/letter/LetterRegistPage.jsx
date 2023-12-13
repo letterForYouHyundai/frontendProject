@@ -3,6 +3,8 @@ import { UserContext } from 'contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import useApi from 'hooks/useApi';
 import LetterTemplate from 'components/letter/LetterTemplate';
+import DraggableColorPicker from 'components/letter/DraggableColorPicker';
+import { MyButton } from 'styles/components/commons/ButtonStyles';
 
 const LetterRegistPage = () => {
   const { userInfo } = useContext(UserContext);
@@ -11,7 +13,12 @@ const LetterRegistPage = () => {
   const [userName, setUserName] = useState('');
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
-  const [backgroundColor, setBackgroundColor] = useState('#6CBFC3');
+  const [colorInfo, setColorInfo] = useState({
+    name: 'Viva Magenta',
+    hex: '#BB2749',
+    rgb: '(187, 39, 73)',
+    textColor: 'white',
+  });
   const [apiCall, setApiCall] = useState({
     url: '',
     method: 'GET',
@@ -21,12 +28,11 @@ const LetterRegistPage = () => {
   });
   const { data, isLoading, error } = useApi({ ...apiCall });
   const handleComplete = () => {
-    console.log('test');
     const letterData = {
       letterTitle: title,
       letterContent: content,
       letterSendId: userName,
-      letterColorNo: 'RGB: (108,191,195)',
+      letterColorNo: colorInfo.hex,
     };
 
     setApiCall((prev) => ({
@@ -73,11 +79,14 @@ const LetterRegistPage = () => {
     setUserName(value);
   };
 
+  const handlePickerClick = (cInfo) => {
+    setColorInfo(cInfo);
+  };
   return (
     <>
-      <h1>편지 작성 페이지 입니다</h1>
-      <button type="button" onClick={handleComplete}>편지 작성 완료</button>
-      <LetterTemplate backgroundColor={backgroundColor} from={false} title={title} content={content} userName={userName} textColor="white" onChangeTitle={handleTitleText} onChangeContent={handleContentText} onChangeUser={handleUserText} />
+      <DraggableColorPicker onPickerClick={handlePickerClick} />
+      <LetterTemplate from={false} title={title} content={content} userName={userName} colorInfo={colorInfo} onChangeTitle={handleTitleText} onChangeContent={handleContentText} onChangeUser={handleUserText} />
+      <MyButton type="button" onClick={handleComplete} variant="outlined">편지 작성 완료</MyButton>
     </>
   );
 };
