@@ -56,7 +56,7 @@ export const ColorInfo = styled.div`
   padding: 1rem 2rem;
 `;
 
-export const TitleMessage = styled.input`
+export const TitleMessageInput = styled.input`
   color: #EEF0F1;
   font-size: 1.5rem;
   font-weight: 700;
@@ -70,8 +70,37 @@ export const TitleMessage = styled.input`
   display: block;
 `;
 
-export const DetailedMessage = styled.textarea`
-  color: red;
+export const TitleMessageText = styled.span`
+  color: #EEF0F1;
+  font-size: 1.5rem;
+  font-weight: 700;
+  word-wrap: break-word;
+  height: auto;
+  padding: 1rem;
+  background: none;
+  border: none;
+  font-family: 'namum-myeongjo-regular', Helvetica;
+  width: 90%;
+  display: block;
+`;
+
+export const DetailedMessageTextArea = styled.textarea`
+  color: black;
+  font-size: 1rem;
+  font-weight: 300;
+  word-wrap: break-word;
+  padding: 1rem;
+  background: none;
+  border: none;
+  font-family: 'namum-myeongjo-regular', Helvetica;
+  min-width: 90%;
+  resize: none;
+  height: auto;
+  display: block;
+`;
+
+export const DetailedMessageText = styled.span`
+  color: black;
   font-size: 1rem;
   font-weight: 300;
   word-wrap: break-word;
