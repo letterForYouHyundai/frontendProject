@@ -1,0 +1,44 @@
+.board-list {
+  max-width: 100%;
+  margin: auto;
+  font-size: 1em;
+}
+
+.board-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.board-list th, .board-list td {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.board-list th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
+
+.link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.board-list tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.board-list thead th {
+  border-top: none;
+}
+
+.board-list tr:hover {
+  background-color: lightgray; /* 호버 효과를 위한 배경색 변경 */
+}
