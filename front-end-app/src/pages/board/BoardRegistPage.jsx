@@ -31,9 +31,9 @@ const BoardRegistPage = () => {
     formData.append('boardDTO', new Blob([boardDTO], { type: 'application/json' }));
 
     images.forEach((image, index) => {
-      formData.append(`images[${index}]`, image);
+      formData.append('multipartFiles', image);
     });
-
+    // console.log(formData);
     setApiCall({
       url: '/board/register',
       method: 'POST',
