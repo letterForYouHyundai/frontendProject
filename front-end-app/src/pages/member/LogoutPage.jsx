@@ -24,7 +24,6 @@ const LogoutPage = () => {
     if (data != null || data === undefined) {
       console.log(data);
       console.log('로그아웃 성공');
-      localStorage.removeItem('userInfo');
       setUserInfo(null);
     }
   }, [data]);

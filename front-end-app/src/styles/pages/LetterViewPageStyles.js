@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const PageTemplate = styled.div`
-  width: 70rem;
+  width: 100%;
   height: 40rem;
   background-color: rgba(149, 99, 63, 0.5);
   border-radius: 5px;

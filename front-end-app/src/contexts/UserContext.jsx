@@ -1,14 +1,32 @@
-import React, { useMemo, useState, createContext } from 'react';
+import React, {
+  useMemo, useState, createContext, useEffect,
+} from 'react';
+import axios from 'axios';
 
 export const UserContext = createContext(null);
 
 const UserProvider = ({ children }) => {
-  const localStorageUser = localStorage.getItem('userInfo');
-  const [userInfo, setUserInfo] = useState(localStorageUser ? JSON.parse(localStorageUser) : undefined);
+  const sessionStorageUser = sessionStorage.getItem('userInfo');
+  const [userInfo, setUserInfo] = useState(sessionStorageUser ? JSON.parse(sessionStorageUser) : undefined);
   const value = useMemo(() => ({
     userInfo,
     setUserInfo,
   }), [userInfo]);
+
+  useEffect(() => {
+    // Make the Axios request when the component mounts
+    axios.get('/common/checkLoginYn')
+      .then((response) => {
+        if (response.data.result != null) {
+          setUserInfo(response.data.result);
+        } else {
+          setUserInfo(null);
+        }
+      })
+      .catch((error) => {
+        console.error('Error checking login status:', error);
+      });
+  }, []);
 
   return (
     <UserContext.Provider value={value}>{children}</UserContext.Provider>

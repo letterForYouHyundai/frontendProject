@@ -1,0 +1,16 @@
+/* LetterMemberConfirm.css */
+
+.letter-member-confirm-container {
+  margin-bottom: 20px;
+}
+
+label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.message-input {
+  padding: 8px;
+  width: 300px;
+  margin-top: 8px;
+}

@@ -1,24 +1,45 @@
-import LetterMiniTemplate from 'components/letter/LetterMiniTemplate';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useApi from 'hooks/useApi';
+
 import * as Page from 'styles/pages/LetterViewPageStyles';
+import LetterMiniTemplate from 'components/letter/LetterMiniTemplate';
 import Pagination from 'components/commons/Pagination';
 
 const LetterReceiveListPage = () => {
   const navigate = useNavigate();
-  const handleClickLetter = (letterId) => {
-    navigate(`/letter/receive/${letterId}`);
+  const { data: letterData, isLoading, error } = useApi({
+    url: '/api/letter/receive/list',
+  });
+
+  useEffect(() => {
+    if (error) {
+      console.error('Error fetching letters:', error);
+    }
+  }, [error]);
+
+  const handleClickLetter = (letterNo) => {
+    navigate(`/letter/receive/${letterNo}`);
   };
+
+  if (isLoading) return <p>Loading...</p>;
+  if (!letterData) return <p>No data available</p>;
 
   return (
     <>
       <Page.TitleText>받은 편지함</Page.TitleText>
+
       <Page.PageTemplate>
-        <LetterMiniTemplate text="From.ljy" pickerColor="red" onClick={() => handleClickLetter('575')} />
-        <LetterMiniTemplate text="From.jk" pickerColor="blue" onClick={() => handleClickLetter('600')} />
-        <LetterMiniTemplate text="From.es" pickerColor="green" onClick={() => handleClickLetter('601')} />
+        {letterData.letterList.map((letter) => (
+          <LetterMiniTemplate
+            key={letter.letterNo}
+            text={`From: ${letter.senderNickname}`}
+            pickerColor={letter.colorPalette.colorHex}
+            onClick={() => handleClickLetter(letter.letterNo)}
+          />
+        ))}
       </Page.PageTemplate>
-      <Pagination count={15} />
+      {/* <Pagination count={letterData.pagination.totalPageCount} /> */}
     </>
   );
 };

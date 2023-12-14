@@ -5,6 +5,7 @@ import useApi from 'hooks/useApi';
 import LetterTemplate from 'components/letter/LetterTemplate';
 import DraggableColorPicker from 'components/letter/DraggableColorPicker';
 import { MyButton } from 'styles/components/commons/ButtonStyles';
+import LetterMemberrConfirm from 'pages/letter/LetterMemberConfirm';
 
 const LetterRegistPage = () => {
   const { userInfo } = useContext(UserContext);
@@ -15,6 +16,10 @@ const LetterRegistPage = () => {
   const [title, setTitle] = useState('');
   const [receiveEmail, setReceiveEmail] = useState('');
   const [memberYn, setMemberYn] = useState('');
+  const [letterUrl, setLetterUrl] = useState('');
+  const [letterNo, setLetterNo] = useState('');
+  const [isChecked, setIsChecked] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   // color
   const [colorInfo, setColorInfo] = useState({
@@ -44,24 +49,30 @@ const LetterRegistPage = () => {
       return;
     }
     // 보내는 대상의 이름을 입력해주세요.
-    if (!userName === null) {
-      alert('보내는 대상의 이름을 입력해주세요.');
+    if (!userName.trim()) {
+      alert('보내는 대상의 별칭을 입력해주세요.');
       return;
     }
-    // 나중에 validation check박스 추가시 있는 경우에는 아이디 validation 체크
-    /* if (memberYn === null) {
-      alert('보내는 대상이 회원인지 조회해주세요.');
-      return;
-    }
-    if (memberYn === 'N') {
-      alert('보내는 대상이 회원이 아닙니다.');
-      return;
-    } */
 
+    // 나중에 validation check박스 추가시 있는 경우에는 아이디 validation 체크
+    if (isChecked === true) {
+      if (!inputValue.trim()) {
+        alert('회원 이메일을 입력해주세요.');
+        return;
+      }
+      if (memberYn === null) {
+        alert('보내는 대상이 회원인지 조회해주세요.');
+        return;
+      }
+      if (memberYn === 'N') {
+        alert('보내는 대상이 회원이 아닙니다.');
+        return;
+      }
+    }
     const letterData = {
       letterTitle: title,
       letterContent: content,
-      // letterSendId: userName,
+      letterReceiveId: inputValue,
       userAlias: userName, // receiveUserAlias
       letterColorNo: colorInfo.colorNo,
     };
@@ -85,15 +96,24 @@ const LetterRegistPage = () => {
 
   useEffect(() => {
     if (data != null || data === undefined) {
-      console.log('회원여부 조회 성공');
-      console.log(data);
       if (data.checkMemberYn === 'N') {
         setMemberYn('N');
       } else {
         setMemberYn('Y');
       }
+      if (data.letterUrl != null && data.letterUrl !== undefined) {
+        setLetterUrl(data.letterUrl);
+      }
+      if (data.letterNo != null && data.letterNo !== undefined) {
+        setLetterNo(data.letterNo);
+      }
     }
   }, [data]);
+  useEffect(() => {
+    if (letterUrl !== null && letterUrl !== undefined && letterUrl !== '' && letterNo !== null && letterNo !== undefined && letterNo !== '') {
+      navigate('/letter/complete', { state: { letterUrl, letterNo } });
+    }
+  }, [letterUrl, letterNo]);
 
   useEffect(() => {
 
@@ -103,7 +123,7 @@ const LetterRegistPage = () => {
     // console.log(`receiveEmail:  ${receiveEmail}`);
     // 이후에 회원아이디가 변경되면 해당 설정 추가
     setMemberYn('N');
-    setApiCall({ ...apiCall, method: 'GET', url: '/member/checkMemberYn?userEmail=2345' });
+    setApiCall({ ...apiCall, method: 'GET', url: `/member/checkMemberYn?userEmail=${inputValue}` });
   };
 
   //  private String letterNo; 편지 번호
@@ -131,15 +151,25 @@ const LetterRegistPage = () => {
   const handleUserText = (e) => {
     const { value } = e.target;
     setUserName(value);
+    console.log(value);
   };
 
   const handlePickerClick = (cInfo) => {
     setColorInfo(cInfo);
+    console.log(colorInfo);
   };
   return (
     <>
       <DraggableColorPicker onPickerClick={handlePickerClick} />
       <LetterTemplate from={false} title={title} content={content} userName={userName} colorInfo={colorInfo} onChangeTitle={handleTitleText} onChangeContent={handleContentText} onChangeUser={handleUserText} />
+      <LetterMemberrConfirm
+        isChecked={isChecked}
+        setIsChecked={setIsChecked}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        memberYn={memberYn}
+        setMemberYn={setMemberYn}
+      />
       <MyButton type="button" onClick={handleComplete} variant="outlined">편지 작성 완료</MyButton>
       <MyButton type="button" onClick={checkMemberYn} variant="outlined">회원 여부 조회</MyButton>
     </>

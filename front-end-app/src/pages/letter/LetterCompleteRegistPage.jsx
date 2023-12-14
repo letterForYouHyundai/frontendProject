@@ -1,11 +1,23 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { UserContext } from 'contexts/UserContext';
+import { useLocation } from 'react-router-dom';
 
 const LetterCompleteRegistPage = () => {
   const { userInfo } = useContext(UserContext);
   const javascriptKey = `${process.env.REACT_APP_JAVASCRIPT_KEY}`;
-  const key = 600;
+  let key;
+  const location = useLocation();
+  const [urlText, setUrlText] = useState('');
+  const { letterUrl, letterNo } = location.state || {};
+
+  const baseUrl = `${process.env.REACT_APP_RCV_BASE_URL}`;
+
+  if (letterUrl.startsWith(baseUrl)) {
+    key = letterUrl.substring(baseUrl.length);
+  }
+
   useEffect(() => {
+    setUrlText(letterUrl);
     const loadKakaoScript = () => {
       const script = document.createElement('script');
       script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
@@ -13,7 +25,6 @@ const LetterCompleteRegistPage = () => {
 
       script.onload = () => {
         window.Kakao.init(javascriptKey);
-        console.log(window.Kakao.isInitialized()); // Kakao SDK 초기화 상태 확인
         window.Kakao.Auth.setAccessToken(userInfo.accessToken);
       };
 
@@ -42,11 +53,17 @@ const LetterCompleteRegistPage = () => {
     }
   };
 
+  const handleUrlText = (e) => {
+    const { value } = e.target;
+    setUrlText(value); // 입력값을 urlText state로 업데이트
+  };
+
   return (
     <>
       <h1>편지 작성이 완료되었습니다.</h1>
       <p>메세지 전송 url</p>
-      <input value="" placeholder="메세지 전송 url" type="text" />
+      <input value={urlText} placeholder="메세지 전송 url" type="text" onChange={handleUrlText} />
+      {/* input 요소의 값은 urlText state와 바인딩됨 */}
       <button type="button" onClick={handleSendMessage}>
         카카오톡으로 메세지 전송하기
       </button>

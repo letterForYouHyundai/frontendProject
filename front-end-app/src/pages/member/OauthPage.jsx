@@ -20,24 +20,17 @@ const OauthPage = () => {
   };
 
   useEffect(() => {
-    const localStorageUser = localStorage.getItem('userInfo');
-    const userInfoFromSession = localStorageUser ? JSON.parse(localStorageUser) : undefined;
-
-    if (userInfoFromSession) {
-      setUserInfo(userInfoFromSession);
-    } else {
-      const urlParams = new URLSearchParams(window.location.search);
-      const code = urlParams.get('code');
-      if (code) {
-        activeLogin(code);
-      }
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    if (code) {
+      activeLogin(code);
     }
   }, []);
 
   useEffect(() => {
     if (data != null || data === undefined) {
       const extractedUserInfo = data;
-      localStorage.setItem('userInfo', JSON.stringify(extractedUserInfo));
+
       setUserInfo(extractedUserInfo);
     }
   }, [data]);
