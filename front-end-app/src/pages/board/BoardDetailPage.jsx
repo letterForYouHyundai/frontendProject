@@ -36,15 +36,7 @@ const BoardDetail = () => {
   return (
     <>
       <Page.TitleText>자유 게시판</Page.TitleText>
-      <FillButton
-        style={{
-          width: 'auto', height: 'auto', margin: '1rem 0', padding: '0.5rem 2rem',
-        }}
-        onClick={() => {}}
-      >
-        목록으로 이동
-      </FillButton>
-      <div style={{ width: '100%', height: '100%' }}>
+      <div style={{ width: '80%', height: '100%', margin: 'auto' }}>
         <div style={{
           padding: '1rem 0',
           color: 'black',
@@ -52,12 +44,12 @@ const BoardDetail = () => {
           fontFamily: 'namum-myeongjo-bold',
           fontWeight: '400',
           wordWrap: 'break-word',
-          textAlign: 'center',
+          textAlign: 'left',
         }}
         >
           {data?.boardTitle}
         </div>
-        <div style={{ minHeight: '30.75rem', borderTop: '1px solid black', margin: '2rem 0' }}>
+        <div style={{ minHeight: '30.75rem', margin: '2rem auto', width: '100%' }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
@@ -112,7 +104,7 @@ const BoardDetail = () => {
               fontFamily: 'namum-myeongjo-regular',
               fontWeight: '400',
               wordWrap: 'break-word',
-              width: '80%',
+              width: '100%',
               minHeight: '10rem',
               margin: '2rem auto',
             }}
@@ -122,7 +114,7 @@ const BoardDetail = () => {
           {data?.attachList?.map((attach, idx) => (
             <img
               style={{
-                maxWidth: '50%', maxHeight: '50%', display: 'block', margin: '0.5rem auto',
+                maxWidth: '50%', maxHeight: '50%', display: 'block', margin: '1rem auto',
               }}
               key={idx}
               src={attach}
@@ -133,30 +125,117 @@ const BoardDetail = () => {
             type="button"
             style={{
               display: 'block',
-              width: '5%',
-              height: '10%',
-              padding: '0.5rem',
+              width: '6rem',
+              height: '3rem',
+              padding: '1rem',
               margin: 'auto',
             }}
             onClick={() => {}}
           >
-            <img
-              src={HeartIcon}
-              style={{
-                width: '1.5rem',
-                height: '1.5rem',
-              }}
-              alt="heart_icon"
-            />
-            {data?.boardLike}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%',
+            }}
+            >
+              <img
+                src={HeartIcon}
+                style={{
+                  width: '1.5rem',
+                  height: '1.5rem',
+                  marginRight: '0.3rem',
+                }}
+                alt="heart_icon"
+              />
+              {data?.boardLike}
+            </div>
           </MyButton>
+          <FillButton
+            style={{
+              width: 'auto', height: '3rem', margin: '2rem auto', padding: '0.5rem 2rem', display: 'block',
+            }}
+            onClick={() => {}}
+          >
+            목록으로 이동
+          </FillButton>
         </div>
+        {data?.commentList?.map((comment, idx) => (
+          <div key={idx} style={{ margin: 'auto', width: '100%' }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              padding: '2rem 0',
+              backgroundColor: 'lightgray',
+              paddingLeft: '1rem',
+              borderTop: '1px solid black',
+              borderBottom: '1px solid black',
+            }}
+            >
+              <img
+                className="img1"
+                style={{
+                  width: '4.5rem', height: '4.5rem', borderRadius: '50%',
+                }}
+                src={comment?.userImage}
+                alt=""
+              />
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                flex: '0 0 auto',
+                maxWidth: '10%',
+              }}
+              >
+                <div
+                  className="txt4"
+                  style={{
+                    margin: '0.3rem 0.5rem',
+                    color: '#666666',
+                    fontSize: '1rem',
+                    fontFamily: 'namum-myeongjo-regular',
+                    fontWeight: '400',
+                    wordWrap: 'break-word',
+                  }}
+                >
+                  {comment?.commentDate}
+                </div>
+                <div
+                  className="txt3"
+                  style={{
+                    margin: '0.3rem 0.5rem',
+                    color: 'black',
+                    fontSize: '1rem',
+                    fontFamily: 'namum-myeongjo-regular',
+                    fontWeight: '400',
+                    wordWrap: 'break-word',
+                  }}
+                >
+                  {comment?.userNickname}
+                  <br />
+                </div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', marginRight: '1rem' }}>
+                <div style={{
+                  margin: '0.3rem 0.5rem',
+                  fontSize: '1rem',
+                  fontFamily: 'namum-myeongjo-regular',
+                  fontWeight: '400',
+                  wordWrap: 'break-word',
+                }}
+                >
+                  {comment?.commentContent}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
         <div style={{
           width: '100%',
-          display: 'inline-flex',
+          display: 'flex',
           alignItems: 'flex-start',
           height: '10rem',
-          margin: '2rem 0',
+          margin: '2rem auto',
         }}
         >
           <textarea
@@ -167,7 +246,7 @@ const BoardDetail = () => {
               height: '10rem',
               border: ' 1px solid black',
               display: 'inline-block',
-              padding: '0.5rem',
+              padding: '1rem',
               boxSizing: 'border-box',
               fontFamily: 'namum-myeongjo-regular',
             }}
@@ -184,31 +263,6 @@ const BoardDetail = () => {
             등록
           </MyButton>
         </div>
-
-        {/* Repeating elements for each comment */}
-        {/* <div style={{ width: '68.75rem', height: '4.375rem', background: '#E7E7E7' }}>
-          <div style={{ width: '68.75rem', height: '4.375rem' }} />
-          <div style={{
-            color: '#666666', fontSize: '0.75rem', fontFamily: 'GungSeo', fontWeight: '400', wordWrap: 'break-word',
-          }}
-          >
-            12.07 01:58:54
-          </div>
-          <img style={{ width: '3.125rem', height: '3.125rem', borderRadius: '100px' }} src="https://via.placeholder.com/50x50" alt="" />
-          <div style={{
-            color: 'black', fontSize: '0.875rem', fontFamily: 'GungSeo', fontWeight: '400', wordWrap: 'break-word',
-          }}
-          >
-            요즘 민트초코가 1등 맛 아닙니까?
-          </div>
-          <div style={{
-            color: 'black', fontSize: '0.75rem', fontFamily: 'GungSeo', fontWeight: '400', wordWrap: 'break-word',
-          }}
-          >
-            담대한 개구리
-          </div>
-          <img style={{ width: '1.5rem', height: '1.5rem' }} src="https://via.placeholder.com/24x24" alt="" />
-        </div> */}
       </div>
 
     </>
