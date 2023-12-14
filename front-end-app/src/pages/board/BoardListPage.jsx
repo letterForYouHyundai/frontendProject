@@ -7,6 +7,7 @@ import Pagination from 'components/commons/Pagination';
 import { FillButton, MyButton } from 'styles/components/commons/ButtonStyles';
 import ModalContainer from 'components/commons/ModalContainer';
 import { UserContext } from 'contexts/UserContext';
+import LoadingSpinner from 'components/commons/LoadingSpinner';
 
 const BoardListPage = () => {
   const { userInfo } = useContext(UserContext);
@@ -15,22 +16,6 @@ const BoardListPage = () => {
   const { data, isLoading, error } = useApi({ ...apiCall });
   const [page, setPage] = useState(1);
   const [loginRequiredModel, setLoginRequiredModel] = useState(false);
-  if (isLoading) return <p>Loading...</p>;
-
-  const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
-    const now = new Date();
-
-    // 'YYYY-MM-DD' 형식으로 날짜 비교
-    const isToday = date.toISOString().split('T')[0] === now.toISOString().split('T')[0];
-
-    if (isToday) {
-      // 오늘 날짜이면 'HH:mm' 형식으로 반환 (오전, 오후 제거)
-      return new Intl.DateTimeFormat('default', { hour: '2-digit', minute: '2-digit', hour12: false }).format(date);
-    }
-    // 오늘 날짜가 아니면 'MM-DD' 형식으로 반환
-    return new Intl.DateTimeFormat('default', { month: '2-digit', day: '2-digit' }).format(date).replace('. ', '-').replace('.', '');
-  };
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -43,6 +28,7 @@ const BoardListPage = () => {
       setLoginRequiredModel(true);
     } else navigate('/board/regist');
   };
+  if (isLoading) return <LoadingSpinner />;
   return (
     <>
       <Page.TitleText>자유 게시판</Page.TitleText>
@@ -82,7 +68,7 @@ const BoardListPage = () => {
                   <td>{item.userNickname}</td>
                   <td>{item.likeCount}</td>
                   <td>{item.boardView}</td>
-                  <td>{formatDate(item.registDate)}</td>
+                  <td>{item.registDate}</td>
                 </tr>
               ))}
             </tbody>
