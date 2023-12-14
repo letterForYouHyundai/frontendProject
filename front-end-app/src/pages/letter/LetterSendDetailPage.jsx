@@ -29,7 +29,7 @@ const LetterSendDetailPage = () => {
   const { data, loading, error } = useApi({ ...apiCall });
 
   const readLetterData = () => {
-    setApiCall({ ...apiCall, url: `${currentURL}` });
+    setApiCall({ url: `${currentURL}` });
   };
   const handleBack = () => {
     navigate(-1);

@@ -72,10 +72,15 @@ const LetterRegistPage = () => {
     const letterData = {
       letterTitle: title,
       letterContent: content,
-      letterReceiveId: inputValue,
-      userAlias: userName, // receiveUserAlias
+      userAlias: userName,
       letterColorNo: colorInfo.colorNo,
+      checkYn: isChecked ? 'Y' : 'N',
     };
+
+    // 체크박스가 체크되어있는 경우에만 회원 아이디 전송
+    if (isChecked) {
+      letterData.letterReceiveId = inputValue;
+    }
 
     setApiCall((prev) => ({
       ...prev,
