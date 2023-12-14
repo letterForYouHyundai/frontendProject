@@ -101,12 +101,14 @@ const LetterRegistPage = () => {
 
   useEffect(() => {
     if (data != null || data === undefined) {
-      if (data.checkMemberYn === 'N') {
-        setMemberYn('N');
-        alert('회원 조회에 실패했습니다..');
-      } else {
-        setMemberYn('Y');
-        alert('회원 조회에 성공했습니다!');
+      if (apiCall.url.includes('/member/checkMemberYn')) {
+        if (data.checkMemberYn === 'N') {
+          setMemberYn('N');
+          alert('회원 조회에 실패했습니다..');
+        } else {
+          setMemberYn('Y');
+          alert('회원 조회에 성공했습니다!');
+        }
       }
       if (data.letterUrl != null && data.letterUrl !== undefined) {
         setLetterUrl(data.letterUrl);
