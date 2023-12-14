@@ -30,6 +30,7 @@ const LetterReceiveListPage = () => {
       <Page.TitleText>받은 편지함</Page.TitleText>
 
       <Page.PageTemplate>
+
         {letterData.letterList.map((letter) => (
           <LetterMiniTemplate
             key={letter.letterNo}
@@ -38,6 +39,7 @@ const LetterReceiveListPage = () => {
             onClick={() => handleClickLetter(letter.letterNo)}
           />
         ))}
+
       </Page.PageTemplate>
       {/* <Pagination count={letterData.pagination.totalPageCount} /> */}
     </>
