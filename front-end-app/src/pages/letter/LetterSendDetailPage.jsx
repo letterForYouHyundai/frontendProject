@@ -44,7 +44,7 @@ const LetterSendDetailPage = () => {
     if (data != null || data === undefined) {
       setTitle(data.letterDTO.letterTitle);
       setContent(data.letterDTO.letterContent);
-      setUserName(data.letterDTO.userAlias);
+      setUserName(data.letterDTO.senderNickname);
       const { colorPalette } = data.letterDTO;
       setColorInfo({
         name: colorPalette.colorName,
