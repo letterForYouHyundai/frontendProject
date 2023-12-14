@@ -95,7 +95,7 @@ export const DetailedMessageTextArea = styled.textarea`
   font-family: 'namum-myeongjo-regular', Helvetica;
   min-width: 90%;
   resize: none;
-  height: auto;
+  height: 20rem;
   display: block;
 `;
 

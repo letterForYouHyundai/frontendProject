@@ -12,18 +12,18 @@ const Header = () => {
     <H.DivWrapper>
       <H.DivContentWrapper>
         <H.StyledNavLink
-          to="/"
+          to="/board"
         >
-          <H.Image src={Letter4U} alt="" />
+          <H.Image src={Letter4U} alt="logo" />
         </H.StyledNavLink>
         <H.LeftAlignedDiv>
-          <H.TextWrapper>
+          {/* <H.TextWrapper>
             <H.StyledNavLink
               to="/template"
             >
               템플릿
             </H.StyledNavLink>
-          </H.TextWrapper>
+          </H.TextWrapper> */}
           <H.TextWrapper>
             <H.StyledNavLink
               to="/board"
