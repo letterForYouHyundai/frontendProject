@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from 'contexts/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import useApi from 'hooks/useApi';
 import LetterTemplate from 'components/letter/LetterTemplate';
 import { MyButton } from 'styles/components/commons/ButtonStyles';
 import * as Page from 'styles/pages/LetterViewPageStyles';
 
 const LetterReceiveDetailPage = () => {
+  const location = useLocation();
+  const letterNo = location.state && location.state.letterNo;
   const navigate = useNavigate();
   const [userName, setUserName] = useState('User');
   const [content, setContent] = useState('Content입니당');
@@ -22,7 +24,7 @@ const LetterReceiveDetailPage = () => {
   const { data, loading, error } = useApi({ ...apiCall });
 
   const readLetterData = () => {
-    setApiCall({ url: `${currentURL}` });
+    setApiCall({ ...apiCall, url: `/letter/receive/${letterNo}` });
   };
 
   const [colorInfo, setColorInfo] = useState({
@@ -36,6 +38,7 @@ const LetterReceiveDetailPage = () => {
   };
 
   useEffect(() => {
+    console.log(`letterNo : ${letterNo}`);
     readLetterData();
   }, []);
   useEffect(() => {

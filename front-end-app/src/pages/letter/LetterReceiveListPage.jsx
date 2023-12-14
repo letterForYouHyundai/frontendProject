@@ -19,7 +19,7 @@ const LetterReceiveListPage = () => {
   }, [error]);
 
   const handleClickLetter = (letterNo) => {
-    navigate(`/letter/receive/${letterNo}`);
+    navigate(`/letter/receive/${letterNo}`, { state: { letterNo } });
   };
 
   if (isLoading) return <p>Loading...</p>;

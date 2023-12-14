@@ -20,7 +20,7 @@ const LetterSendListPage = () => {
   }, [error]);
 
   const handleClickLetter = (letterNo) => {
-    navigate(`/letter/send/${letterNo}`);
+    navigate(`/letter/send/${letterNo}`, { state: { letterNo } });
   };
 
   if (isLoading) return <LoadingSpinner />;
