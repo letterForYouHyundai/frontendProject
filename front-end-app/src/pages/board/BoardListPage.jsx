@@ -59,7 +59,7 @@ const BoardListPage = () => {
               {data.boardList.map((item) => (
                 <tr key={item.boardNo}>
                   <td>
-                    <img src={item.image} alt="" style={{ maxWidth: '4.5rem', maxHeight: '4.5rem' }} />
+                    <img src={item.image} alt="" style={{ width: '4.5rem', height: '4.5rem' }} />
                   </td>
                   <td>
                     <Link to={`/board/${item.boardNo}`} className="link">{item.boardTitle}</Link>

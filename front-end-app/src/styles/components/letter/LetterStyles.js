@@ -5,7 +5,7 @@ export const Container = styled.div`
   min-width: 35rem;
   width: 40%;
   height: auto;
-  background: #6CBFC3;
+  background: #F5F4F1;
   margin: auto;
   padding: 4rem 2rem;
 `;
@@ -25,7 +25,7 @@ export const Square = styled.div`
   min-height: 25rem;
   height: auto;
   margin: auto;
-  background: #6CBFC3;
+  background: #F5F4F1;
   border-radius: 0.4rem;
 `;
 

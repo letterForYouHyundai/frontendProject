@@ -14,7 +14,7 @@ export const Container = styled.div`
 export const ColorDiv = styled.div`
   width: 7rem;
   height: 7rem;
-  background: #F77B55;
+  background: white;
   border-radius: 0.4rem;
   margin: auto;
   border: none;
