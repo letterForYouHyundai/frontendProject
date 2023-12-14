@@ -23,12 +23,16 @@ const BoardDetail = () => {
     useNav: false,
   });
   const { data, isLoading, error } = useApi({ ...apiCall });
+  const editData = {
+
+  };
 
   const [boardLike, setBoardLike] = useState('N');
   const [likeCnt, setLikeCnt] = useState(0);
   const [boardData, setBoardData] = useState(null);
   const [comment, setComment] = useState(null);
   const [commetText, setCommetText] = useState('');
+  const [sendCommetId, setSendCommetId] = useState('');
 
   const getBoardInfo = async () => {
     const response = await axios.get(`/board/${id}`);
@@ -61,12 +65,48 @@ const BoardDetail = () => {
       getBoardInfo();
     }
   };
+  const handEditComment = () => {
+    // 보낼 데이터
+    editData.commentId = sendCommetId;
+    editData.commentContent = commetText;
+    // POST 요청 보내기
+    axios.post(`/board/comment/${sendCommetId}`, editData)
+      .then((response) => {
+        console.log('댓글이 성공적으로 수정되었습니다.', response.data);
+        // 성공 시 실행되는 코드
+      })
+      .catch(() => {
+        console.error('댓글 수정에 실패했습니다.', error);
+        // 실패 시 실행되는 코드
+      });
+  };
 
   const handleCommentText = (e) => {
     const { value } = e.target;
     setCommetText(value);
   };
+  const deleteComment = (e) => {
+    const shouldDelete = window.confirm('정말 삭제하시겠습니까?');
+    if (shouldDelete) {
+      axios.put(`/board/comment/${e}`)
+        .then((response) => {
+          console.log('삭제가 확인되었습니다.');
+        })
+        .catch(() => {
+          console.error('삭제오류');
+        });
+    }
+  };
 
+  const editCommentFrm = (commentId, commentContent) => {
+    console.log('commentId', commentId);
+    const shouldDelete = window.confirm('정말로 수정하시겠습니까?');
+    if (shouldDelete) {
+      console.log('수정');
+      setCommetText(commentContent);
+      setSendCommetId(commentId);
+    }
+  };
   // API 데이터를 로컬 상태로 동기화
   useEffect(() => {
     setBoardData(data);
@@ -261,8 +301,12 @@ const BoardDetail = () => {
                   {cmmt?.isWriter === 'Y' && (
                   <button
                     type="button"
+                    onClick={() => editCommentFrm(cmmt?.commentId, cmmt?.commentContent)}
                     style={{
-                      background: 'none', margin: '3px', borderRadius: '0', border: '1px solid black',
+                      background: 'none',
+                      margin: '3px',
+                      borderRadius: '0',
+                      border: '1px solid black',
                     }}
                   >
                     수정
@@ -271,8 +315,12 @@ const BoardDetail = () => {
                   {cmmt?.isWriter === 'Y' && (
                   <button
                     type="button"
+                    onClick={() => deleteComment(cmmt?.commentId)}
                     style={{
-                      background: 'none', margin: '3px', borderRadius: '0', border: '1px solid black',
+                      background: 'none',
+                      margin: '3px',
+                      borderRadius: '0',
+                      border: '1px solid black',
                     }}
                   >
                     삭제
