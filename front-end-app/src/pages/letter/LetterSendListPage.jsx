@@ -5,6 +5,7 @@ import useApi from 'hooks/useApi';
 import * as Page from 'styles/pages/LetterViewPageStyles';
 import LetterMiniTemplate from 'components/letter/LetterMiniTemplate';
 import Pagination from 'components/commons/Pagination';
+import LoadingSpinner from 'components/commons/LoadingSpinner';
 
 const LetterSendListPage = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const LetterSendListPage = () => {
     navigate(`/letter/send/${letterNo}`);
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
   if (!letterData) return <p>No data available</p>;
 
   return (
@@ -34,7 +35,7 @@ const LetterSendListPage = () => {
           <LetterMiniTemplate
             key={letter.letterNo}
             text={`To: ${letter.receiverNickname}`}
-            pickerColor={letter.colorPalette.colorName}
+            pickerColor={letter.colorPalette.colorHex}
             onClick={() => handleClickLetter(letter.letterNo)}
           />
         ))}

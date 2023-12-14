@@ -34,7 +34,7 @@ const LetterReceiveListPage = () => {
           <LetterMiniTemplate
             key={letter.letterNo}
             text={`From: ${letter.senderNickname}`}
-            pickerColor={letter.colorPalette.colorName}
+            pickerColor={letter.colorPalette.colorHex}
             onClick={() => handleClickLetter(letter.letterNo)}
           />
         ))}
