@@ -22,7 +22,7 @@ const LetterReceiveDetailPage = () => {
   const { data, loading, error } = useApi({ ...apiCall });
 
   const readLetterData = () => {
-    setApiCall({ ...apiCall, url: `${currentURL}` });
+    setApiCall({ url: `${currentURL}` });
   };
 
   const [colorInfo, setColorInfo] = useState({
