@@ -72,7 +72,7 @@ const LetterRegistPage = () => {
     const letterData = {
       letterTitle: title,
       letterContent: content,
-      letterSendId: inputValue,
+      letterReceiveId: inputValue,
       userAlias: userName, // receiveUserAlias
       letterColorNo: colorInfo.colorNo,
     };
@@ -156,6 +156,7 @@ const LetterRegistPage = () => {
 
   const handlePickerClick = (cInfo) => {
     setColorInfo(cInfo);
+    console.log(colorInfo);
   };
   return (
     <>
@@ -166,6 +167,8 @@ const LetterRegistPage = () => {
         setIsChecked={setIsChecked}
         inputValue={inputValue}
         setInputValue={setInputValue}
+        memberYn={memberYn}
+        setMemberYn={setMemberYn}
       />
       <MyButton type="button" onClick={handleComplete} variant="outlined">편지 작성 완료</MyButton>
       <MyButton type="button" onClick={checkMemberYn} variant="outlined">회원 여부 조회</MyButton>
