@@ -10,7 +10,7 @@ import LoadingSpinner from 'components/commons/LoadingSpinner';
 const LetterSendListPage = () => {
   const navigate = useNavigate();
   const { data: letterData, isLoading, error } = useApi({
-    url: '/api/letter/send/list',
+    url: '/letter/send/list',
   });
 
   useEffect(() => {
