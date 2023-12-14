@@ -1,9 +1,11 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { UserContext } from 'contexts/UserContext';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { FillButton, MyButton } from 'styles/components/commons/ButtonStyles';
 
 const LetterCompleteRegistPage = () => {
   const { userInfo } = useContext(UserContext);
+  const navigate = useNavigate();
   const javascriptKey = `${process.env.REACT_APP_JAVASCRIPT_KEY}`;
   let key;
   const location = useLocation();
@@ -59,15 +61,39 @@ const LetterCompleteRegistPage = () => {
   };
 
   return (
-    <>
-      <h1>편지 작성이 완료되었습니다.</h1>
-      <p>메세지 전송 url</p>
-      <input value={urlText} placeholder="메세지 전송 url" type="text" onChange={handleUrlText} />
+    <div style={{ margin: 'auto', width: '50%' }}>
+      <p style={{ fontSize: '3rem', margin: '3rem 3rem 0.5rem 3rem' }}>편지 작성이</p>
+      <p style={{ fontSize: '3rem', margin: '0.5rem 3rem' }}>완료되었습니다.</p>
+      <p style={{ fontSize: '1.5rem', margin: '2rem 3rem' }}>메세지 전송 url</p>
+      <input
+        style={{
+          display: 'block', width: '30rem', margin: '2rem 3rem', padding: '0.5rem',
+        }}
+        value={urlText}
+        placeholder="메세지 전송 url"
+        type="text"
+        onChange={handleUrlText}
+      />
       {/* input 요소의 값은 urlText state와 바인딩됨 */}
-      <button type="button" onClick={handleSendMessage}>
+      <FillButton
+        style={{
+          width: 'auto', display: 'block', padding: '0 2rem', margin: '2rem 3rem',
+        }}
+        type="button"
+        onClick={handleSendMessage}
+      >
         카카오톡으로 메세지 전송하기
-      </button>
-    </>
+      </FillButton>
+      <MyButton
+        style={{
+          width: 'auto', display: 'block', padding: '0 2rem', margin: '2rem 3rem',
+        }}
+        type="button"
+        onClick={() => navigate('/board')}
+      >
+        메인으로 돌아가기
+      </MyButton>
+    </div>
   );
 };
 
