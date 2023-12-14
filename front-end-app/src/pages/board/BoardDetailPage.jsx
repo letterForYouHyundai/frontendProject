@@ -258,7 +258,26 @@ const BoardDetail = () => {
                   }}
                 >
                   {cmmt?.userNickname}
-                  <br />
+                  {cmmt?.isWriter === 'Y' && (
+                  <button
+                    type="button"
+                    style={{
+                      background: 'none', margin: '3px', borderRadius: '0', border: '1px solid black',
+                    }}
+                  >
+                    수정
+                  </button>
+                  )}
+                  {cmmt?.isWriter === 'Y' && (
+                  <button
+                    type="button"
+                    style={{
+                      background: 'none', margin: '3px', borderRadius: '0', border: '1px solid black',
+                    }}
+                  >
+                    삭제
+                  </button>
+                  )}
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', marginRight: '1rem' }}>
