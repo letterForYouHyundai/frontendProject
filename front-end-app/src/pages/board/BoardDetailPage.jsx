@@ -1,6 +1,6 @@
 // BoardDetail.js
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import useApi from 'hooks/useApi';
 import * as Page from 'styles/pages/LetterViewPageStyles';
@@ -8,30 +8,76 @@ import { FillButton, MyButton } from 'styles/components/commons/ButtonStyles';
 import 'assets/fonts/fonts.css';
 import LoadingSpinner from 'components/commons/LoadingSpinner';
 import HeartIcon from 'assets/image/icons/heart.png';
+import BHeartIcon from 'assets/image/icons/bheart.png';
+import axios from 'axios';
 
 const BoardDetail = () => {
   const { id } = useParams();
+  const [modalOpen, setModalOpen] = React.useState(false);
 
-  const { data, isLoading, error } = useApi({ url: `/board/${id}`, method: 'GET' });
+  const [apiCall, setApiCall] = useState({
+    url: `/board/${id}`,
+    method: 'GET',
+    body: null,
+    headers: null,
+    useNav: false,
+  });
+  const { data, isLoading, error } = useApi({ ...apiCall });
 
-  // <div>
-  //   <h1>게시물 상세 페이지</h1>
-  //   <p>{`게시물 ID: ${id}`}</p>
-  //   <p>{`boardTitle: ${data?.boardTitle}`}</p>
-  //   <p>{`userNickname: ${data?.userNickname}`}</p>
-  //   <p>
-  //     attachList:
-  //     {data?.attachList?.map((attach, idx) => <p key={idx}>{attach?.file_name}</p>)}
-  //   </p>
-  //   <p>{`boardContent: ${data?.boardContent}`}</p>
-  //   <p>{`boardDate: ${data?.boardDate}`}</p>
-  //   <p>{`boardLike: ${data?.boardLike}`}</p>
-  //   <p>
-  //     commentList:
-  //     {data?.commentList?.map((comment, idx) => <p key={idx}>{comment?.comment_content}</p>)}
-  //   </p>
-  //   <p>{`userImage: ${data?.userImage}`}</p>
-  // </div>
+  const [boardLike, setBoardLike] = useState('N');
+  const [likeCnt, setLikeCnt] = useState(0);
+  const [boardData, setBoardData] = useState(null);
+  const [comment, setComment] = useState(null);
+  const [commetText, setCommetText] = useState('');
+
+  const getBoardInfo = async () => {
+    const response = await axios.get(`/board/${id}`);
+    if (response.data.code === 200) {
+      setBoardData({ ...response.data.result });
+    }
+  };
+
+  const handleClickLike = async () => {
+    try {
+      const response = await axios.post(`/board/likes/${id}`, { boardNo: id });
+      if (response.data.code === 200) {
+        // 로컬 상태 업데이트
+        if (response.data.result?.boardDTO?.likeYn === 'Y') {
+          setBoardLike('Y');
+          setLikeCnt((prev) => prev + 1);
+        } else {
+          setBoardLike('N');
+          setLikeCnt((prev) => prev - 1);
+        }
+      }
+    } catch (err) {
+      console.error('Error in like button:', err);
+    }
+  };
+  const handleRegistComment = async () => {
+    const response = await axios.post('/board/comment', { boardNo: id, commentContent: commetText });
+    if (response.data.code === 200) {
+      setCommetText('');
+      getBoardInfo();
+    }
+  };
+
+  const handleCommentText = (e) => {
+    const { value } = e.target;
+    setCommetText(value);
+  };
+
+  // API 데이터를 로컬 상태로 동기화
+  useEffect(() => {
+    setBoardData(data);
+  }, [data]);
+
+  useEffect(() => {
+    setBoardLike(boardData?.likeYn);
+    setLikeCnt(boardData?.boardLike);
+    setComment(boardData?.commentList);
+  }, [boardData]);
+
   if (isLoading) return <LoadingSpinner />;
   return (
     <>
@@ -47,7 +93,7 @@ const BoardDetail = () => {
           textAlign: 'left',
         }}
         >
-          {data?.boardTitle}
+          {boardData?.boardTitle}
         </div>
         <div style={{ minHeight: '30.75rem', margin: '2rem auto', width: '100%' }}>
           <div style={{
@@ -63,7 +109,7 @@ const BoardDetail = () => {
               style={{
                 width: '4.5rem', height: '4.5rem', borderRadius: '50%',
               }}
-              src={data?.userImage}
+              src={boardData?.userImage}
               alt=""
             />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -78,7 +124,7 @@ const BoardDetail = () => {
                   wordWrap: 'break-word',
                 }}
               >
-                {data?.boardDate}
+                {boardData?.boardDate}
               </div>
               <div
                 className="txt3"
@@ -91,7 +137,7 @@ const BoardDetail = () => {
                   wordWrap: 'break-word',
                 }}
               >
-                {data?.userNickname}
+                {boardData?.userNickname}
                 <br />
               </div>
             </div>
@@ -109,9 +155,9 @@ const BoardDetail = () => {
               margin: '2rem auto',
             }}
           >
-            {data?.boardContent}
+            {boardData?.boardContent}
           </div>
-          {data?.attachList?.map((attach, idx) => (
+          {boardData?.attachList?.map((attach, idx) => (
             <img
               style={{
                 maxWidth: '50%', maxHeight: '50%', display: 'block', margin: '1rem auto',
@@ -130,7 +176,7 @@ const BoardDetail = () => {
               padding: '1rem',
               margin: 'auto',
             }}
-            onClick={() => {}}
+            onClick={handleClickLike}
           >
             <div style={{
               display: 'flex',
@@ -140,7 +186,7 @@ const BoardDetail = () => {
             }}
             >
               <img
-                src={HeartIcon}
+                src={boardLike === 'N' ? BHeartIcon : HeartIcon}
                 style={{
                   width: '1.5rem',
                   height: '1.5rem',
@@ -148,7 +194,7 @@ const BoardDetail = () => {
                 }}
                 alt="heart_icon"
               />
-              {data?.boardLike}
+              {likeCnt}
             </div>
           </MyButton>
           <FillButton
@@ -160,7 +206,7 @@ const BoardDetail = () => {
             목록으로 이동
           </FillButton>
         </div>
-        {data?.commentList?.map((comment, idx) => (
+        {comment?.map((cmmt, idx) => (
           <div key={idx} style={{ margin: 'auto', width: '100%' }}>
             <div style={{
               display: 'flex',
@@ -177,7 +223,7 @@ const BoardDetail = () => {
                 style={{
                   width: '4.5rem', height: '4.5rem', borderRadius: '50%',
                 }}
-                src={comment?.userImage}
+                src={cmmt?.userImage}
                 alt=""
               />
               <div style={{
@@ -198,7 +244,7 @@ const BoardDetail = () => {
                     wordWrap: 'break-word',
                   }}
                 >
-                  {comment?.commentDate}
+                  {cmmt?.commentDate}
                 </div>
                 <div
                   className="txt3"
@@ -211,7 +257,7 @@ const BoardDetail = () => {
                     wordWrap: 'break-word',
                   }}
                 >
-                  {comment?.userNickname}
+                  {cmmt?.userNickname}
                   <br />
                 </div>
               </div>
@@ -224,7 +270,7 @@ const BoardDetail = () => {
                   wordWrap: 'break-word',
                 }}
                 >
-                  {comment?.commentContent}
+                  {cmmt?.commentContent}
                 </div>
               </div>
             </div>
@@ -240,6 +286,7 @@ const BoardDetail = () => {
         >
           <textarea
             placeholder="댓글을 입력해주세요."
+            value={commetText}
             style={{
               resize: 'none',
               width: '95%',
@@ -250,8 +297,10 @@ const BoardDetail = () => {
               boxSizing: 'border-box',
               fontFamily: 'namum-myeongjo-regular',
             }}
+            onChange={handleCommentText}
           />
           <MyButton
+            onClick={handleRegistComment}
             type="button"
             style={{
               display: 'inline-block',
