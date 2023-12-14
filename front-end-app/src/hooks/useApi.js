@@ -30,7 +30,7 @@ function useApi({
         // console.log('====== response ======');
         console.log(response);
 
-        if (response.data.code === 200 && response.data.status) setData(response.data.result);
+        if (response.data.code === 200 && response.data.status) setData({ ...response.data.result });
         else {
           setError({ code: response.data.code, error: response.data.error });
           if (useNav) { navigate('/error', { state: { error: response.data.error } }); }

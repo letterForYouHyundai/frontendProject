@@ -44,7 +44,7 @@ const LetterSendDetailPage = () => {
     if (data != null || data === undefined) {
       setTitle(data.letterDTO.letterTitle);
       setContent(data.letterDTO.letterContent);
-      setUserName(data.letterDTO.receiverNickname);
+      setUserName(data.letterDTO.userAlias);
       const { colorPalette } = data.letterDTO;
       setColorInfo({
         name: colorPalette.colorName,
@@ -59,7 +59,8 @@ const LetterSendDetailPage = () => {
     <>
       <Page.TitleText>보낸 편지함</Page.TitleText>
       <LetterTemplate from title={title} content={content} userName={userName} colorInfo={colorInfo} regist={false} />
-      <button type="button" onClick={handleBack}>편지 목록으로 이동</button>
+
+      {/* <button type="button" onClick={handleBack}>편지 목록으로 이동</button> */}
     </>
   );
 };

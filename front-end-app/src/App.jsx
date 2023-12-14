@@ -1,6 +1,8 @@
 // App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Route, Routes, Navigate,
+} from 'react-router-dom';
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import routes from 'routes/routes';
@@ -17,6 +19,7 @@ const App = () => (
         <Router>
           <GlobalStyles />
           <Routes>
+            <Route path="/" element={<Navigate to="/board" replace />} />
             {routes.map((route, index) => (
               <Route
                 key={index}

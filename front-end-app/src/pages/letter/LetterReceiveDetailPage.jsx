@@ -43,9 +43,10 @@ const LetterReceiveDetailPage = () => {
   }, []);
   useEffect(() => {
     if (data != null || data === undefined) {
+      console.log(data);
       setTitle(data.letterDTO.letterTitle);
       setContent(data.letterDTO.letterContent);
-      setUserName(data.letterDTO.receiverNickname);
+      setUserName(data.letterDTO.userAlias);
       const { colorPalette } = data.letterDTO;
       setColorInfo({
         name: colorPalette.colorName,
