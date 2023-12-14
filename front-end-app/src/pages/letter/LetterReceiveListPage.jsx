@@ -1,41 +1,43 @@
-import LetterMiniTemplate from 'components/letter/LetterMiniTemplate';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useApi from 'hooks/useApi';
+
 import * as Page from 'styles/pages/LetterViewPageStyles';
+import LetterMiniTemplate from 'components/letter/LetterMiniTemplate';
 import Pagination from 'components/commons/Pagination';
-import axios from 'axios';
 
 const LetterReceiveListPage = () => {
-  const [letterData, setLetterData] = useState({ letterList: [], pagination: {} });
-  const [isLoading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { data: letterData, isLoading, error } = useApi({
+    url: '/api/letter/receive/list',
+  });
 
   useEffect(() => {
-    axios.get('/api/letter/receive/list')
-      .then((response) => {
-        setLetterData(response.data.result);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching letters:', error);
-        setLoading(false);
-      });
-  }, []);
+    if (error) {
+      console.error('Error fetching letters:', error);
+    }
+  }, [error]);
 
   const handleClickLetter = (letterNo) => {
     navigate(`/letter/receive/${letterNo}`);
   };
 
   if (isLoading) return <p>Loading...</p>;
+  if (!letterData) return <p>No data available</p>;
 
   return (
     <>
       <Page.TitleText>받은 편지함</Page.TitleText>
 
       <Page.PageTemplate>
-        <LetterMiniTemplate text="From.ljy" pickerColor="red" onClick={() => handleClickLetter('iT4x7iD7GbzG3y6Mb9CnhQ==')} />
-        <LetterMiniTemplate text="From.jk" pickerColor="blue" onClick={() => handleClickLetter('600')} />
-        <LetterMiniTemplate text="From.es" pickerColor="green" onClick={() => handleClickLetter('601')} />
+        {letterData.letterList.map((letter) => (
+          <LetterMiniTemplate
+            key={letter.letterNo}
+            text={`From: ${letter.senderNickname}`}
+            pickerColor={letter.colorPalette.colorName}
+            onClick={() => handleClickLetter(letter.letterNo)}
+          />
+        ))}
       </Page.PageTemplate>
       {/* <Pagination count={letterData.pagination.totalPageCount} /> */}
     </>
