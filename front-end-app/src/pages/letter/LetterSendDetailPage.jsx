@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from 'contexts/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import useApi from 'hooks/useApi';
 import LetterTemplate from 'components/letter/LetterTemplate';
 import { MyButton } from 'styles/components/commons/ButtonStyles';
@@ -8,6 +8,8 @@ import * as Page from 'styles/pages/LetterViewPageStyles';
 
 const LetterSendDetailPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const letterNo = location.state && location.state.letterNo;
   const [userName, setUserName] = useState('User');
   const [content, setContent] = useState('Content입니당');
   const [title, setTitle] = useState('제목입니당');
@@ -29,7 +31,7 @@ const LetterSendDetailPage = () => {
   const { data, loading, error } = useApi({ ...apiCall });
 
   const readLetterData = () => {
-    setApiCall({ url: `${currentURL}` });
+    setApiCall({ ...apiCall, url: `/letter/send/${letterNo}` });
   };
   const handleBack = () => {
     navigate(-1);
