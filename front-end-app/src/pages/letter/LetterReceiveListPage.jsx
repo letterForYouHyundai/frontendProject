@@ -9,7 +9,7 @@ import Pagination from 'components/commons/Pagination';
 const LetterReceiveListPage = () => {
   const navigate = useNavigate();
   const { data: letterData, isLoading, error } = useApi({
-    url: '/api/letter/receive/list',
+    url: '/letter/receive/list',
   });
 
   useEffect(() => {
