@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Page from 'styles/pages/LetterViewPageStyles';
 import Pagination from 'components/commons/Pagination';
+import axios from 'axios';
 
 const LetterReceiveListPage = () => {
   const [letterData, setLetterData] = useState({ letterList: [], pagination: {} });
@@ -36,7 +37,7 @@ const LetterReceiveListPage = () => {
         <LetterMiniTemplate text="From.jk" pickerColor="blue" onClick={() => handleClickLetter('600')} />
         <LetterMiniTemplate text="From.es" pickerColor="green" onClick={() => handleClickLetter('601')} />
       </Page.PageTemplate>
-      <Pagination count={letterData.pagination.totalPageCount} />
+      {/* <Pagination count={letterData.pagination.totalPageCount} /> */}
     </>
   );
 };

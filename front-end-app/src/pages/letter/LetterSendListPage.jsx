@@ -37,7 +37,7 @@ const LetterSendListPage = () => {
         <LetterMiniTemplate text="To.jk" pickerColor="blue" onClick={() => handleClickLetter('600')} />
         <LetterMiniTemplate text="To.es" pickerColor="green" onClick={() => handleClickLetter('601')} />
       </Page.PageTemplate>
-      <Pagination count={letterData.pagination.totalPageCount} />
+      {/* <Pagination count={letterData.pagination.totalPageCount} /> */}
     </>
   );
 };
