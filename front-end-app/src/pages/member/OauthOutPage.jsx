@@ -15,7 +15,7 @@ const OauthOutPage = () => {
   const { data } = useApi({ ...apiCall });
 
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     // 로그아웃 요청 보내기
     setApiCall({
       ...apiCall,
@@ -27,7 +27,7 @@ const OauthOutPage = () => {
     handleLogout();
     if (data != null || data === undefined) {
       console.log('로그아웃 성공');
-      localStorage.removeItem('userInfo');
+
       setUserInfo(null);
     }
   }, [data]);
