@@ -9,6 +9,7 @@ width: 100%;
 background-color: rgba(149, 99, 63, 0.5);
 border-radius: 5px;
 margin: 3rem auto 0;
+justify-items: center;
 
 @media (max-width: 1200px) {
   grid-template-columns: repeat(3, 1fr); // 3 columns for smaller screens

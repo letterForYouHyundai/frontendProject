@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useContext } from 'react';
 import useApi from 'hooks/useApi';
 import { Link, useNavigate } from 'react-router-dom';
@@ -28,6 +30,15 @@ const BoardListPage = () => {
       setLoginRequiredModel(true);
     } else navigate('/board/regist');
   };
+
+  const handleLinkClick = (boardNo) => {
+    if (!userInfo) {
+      alert('로그인이 필요한 서비스입니다.');
+    } else {
+      navigate(`/board/${boardNo}`);
+    }
+  };
+
   if (isLoading) return <LoadingSpinner />;
   return (
     <>
@@ -57,12 +68,12 @@ const BoardListPage = () => {
             </thead>
             <tbody>
               {data.boardList.map((item) => (
-                <tr key={item.boardNo}>
+                <tr key={item.boardNo} onClick={() => handleLinkClick(item.boardNo)}>
                   <td>
                     <img src={item.image} alt="" style={{ width: '4.5rem', height: '4.5rem' }} />
                   </td>
                   <td>
-                    <Link to={`/board/${item.boardNo}`} className="link">{item.boardTitle}</Link>
+                    <span style={{ color: '#007bff', cursor: 'pointer' }}>{item.boardTitle}</span>
                     {`[${item.commentCount}]`}
                   </td>
                   <td>{item.userNickname}</td>
