@@ -174,9 +174,10 @@ const LetterRegistPage = () => {
         setInputValue={setInputValue}
         memberYn={memberYn}
         setMemberYn={setMemberYn}
+        checkMemberYn={checkMemberYn}
       />
-      <MyButton type="button" onClick={handleComplete} variant="outlined">편지 작성 완료</MyButton>
-      <MyButton type="button" onClick={checkMemberYn} variant="outlined">회원 여부 조회</MyButton>
+      <MyButton type="button" onClick={handleComplete} variant="outlined" style={{ display: 'block', margin: '3rem auto' }}>편지 작성 완료</MyButton>
+      {/* <MyButton type="button" onClick={checkMemberYn} variant="outlined">회원 여부 조회</MyButton> */}
     </>
   );
 };
