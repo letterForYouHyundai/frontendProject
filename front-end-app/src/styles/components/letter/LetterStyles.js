@@ -99,7 +99,7 @@ export const DetailedMessageTextArea = styled.textarea`
   display: block;
 `;
 
-export const DetailedMessageText = styled.span`
+export const DetailedMessageText = styled.pre`
   color: black;
   font-size: 1rem;
   font-weight: 300;
@@ -112,4 +112,5 @@ export const DetailedMessageText = styled.span`
   resize: none;
   height: auto;
   display: block;
+  white-space: pre-line;
 `;

@@ -11,8 +11,8 @@ const LetterReceiveDetailPage = () => {
   const letterNo = location.state && location.state.letterNo;
   const navigate = useNavigate();
   const [userName, setUserName] = useState('User');
-  const [content, setContent] = useState('Content입니당');
-  const [title, setTitle] = useState('제목입니당');
+  const [content, setContent] = useState('');
+  const [title, setTitle] = useState('');
   const [currentURL, setCurrentURL] = useState('');
   const [apiCall, setApiCall] = useState({
     url: '',
