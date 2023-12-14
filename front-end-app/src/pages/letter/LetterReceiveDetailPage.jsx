@@ -26,10 +26,10 @@ const LetterReceiveDetailPage = () => {
   };
 
   const [colorInfo, setColorInfo] = useState({
-    name: 'Viva Magenta',
-    hex: '#BB2749',
-    rgb: '(187, 39, 73)',
-    textColor: 'white',
+    name: '',
+    hex: '',
+    rgb: '',
+    textColor: '',
   });
   const handleBack = () => {
     navigate(-1);
@@ -43,7 +43,13 @@ const LetterReceiveDetailPage = () => {
       setTitle(data.letterDTO.letterTitle);
       setContent(data.letterDTO.letterContent);
       setUserName(data.letterDTO.receiverNickname);
-      setColorInfo(data.letterDTO.colorPalette.colorHex);
+      const { colorPalette } = data.letterDTO;
+      setColorInfo({
+        name: colorPalette.colorName,
+        hex: colorPalette.colorHex,
+        rgb: colorPalette.colorRgb,
+        textColor: colorPalette.colorText,
+      });
     }
   }, [data]);
 
