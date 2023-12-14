@@ -1,7 +1,7 @@
 // BoardDetail.js
 
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import useApi from 'hooks/useApi';
 import * as Page from 'styles/pages/LetterViewPageStyles';
 import { FillButton, MyButton } from 'styles/components/commons/ButtonStyles';
@@ -10,9 +10,12 @@ import LoadingSpinner from 'components/commons/LoadingSpinner';
 import HeartIcon from 'assets/image/icons/heart.png';
 import BHeartIcon from 'assets/image/icons/bheart.png';
 import axios from 'axios';
+import { UserContext } from 'contexts/UserContext';
 
 const BoardDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { userInfo } = useContext(UserContext);
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const [apiCall, setApiCall] = useState({
@@ -33,9 +36,10 @@ const BoardDetail = () => {
   const [comment, setComment] = useState(null);
   const [commetText, setCommetText] = useState('');
   const [sendCommetId, setSendCommetId] = useState('');
+  const [editMode, setEditMode] = useState(false);
 
   const getBoardInfo = async () => {
-    const response = await axios.get(`/board/${id}`);
+    const response = await axios.get(`/api/board/${id}`);
     if (response.data.code === 200) {
       setBoardData({ ...response.data.result });
     }
@@ -43,7 +47,7 @@ const BoardDetail = () => {
 
   const handleClickLike = async () => {
     try {
-      const response = await axios.post(`/board/likes/${id}`, { boardNo: id });
+      const response = await axios.post(`/api/board/likes/${id}`, { boardNo: id });
       if (response.data.code === 200) {
         // 로컬 상태 업데이트
         if (response.data.result?.boardDTO?.likeYn === 'Y') {
@@ -58,26 +62,36 @@ const BoardDetail = () => {
       console.error('Error in like button:', err);
     }
   };
+
   const handleRegistComment = async () => {
-    const response = await axios.post('/board/comment', { boardNo: id, commentContent: commetText });
+    const response = await axios.post('/api/board/comment', { boardNo: id, commentContent: commetText });
     if (response.data.code === 200) {
       setCommetText('');
       getBoardInfo();
     }
   };
-  const handEditComment = () => {
+
+  const handleEditComment = () => {
     // 보낼 데이터
     editData.commentId = sendCommetId;
     editData.commentContent = commetText;
     // POST 요청 보내기
-    axios.post(`/board/comment/${sendCommetId}`, editData)
+    axios.post(`/api/board/comment/${sendCommetId}`, editData)
       .then((response) => {
         console.log('댓글이 성공적으로 수정되었습니다.', response.data);
-        // 성공 시 실행되는 코드
+        return response.data.code;
+      })
+      .then((status) => {
+        if (status === 200) getBoardInfo();
       })
       .catch(() => {
         console.error('댓글 수정에 실패했습니다.', error);
         // 실패 시 실행되는 코드
+      })
+      .finally(() => {
+        setCommetText('');
+        setSendCommetId('');
+        setEditMode(false);
       });
   };
 
@@ -85,12 +99,17 @@ const BoardDetail = () => {
     const { value } = e.target;
     setCommetText(value);
   };
+
   const deleteComment = (e) => {
     const shouldDelete = window.confirm('정말 삭제하시겠습니까?');
     if (shouldDelete) {
-      axios.put(`/board/comment/${e}`)
+      axios.put(`/api/board/comment/${e}`)
         .then((response) => {
           console.log('삭제가 확인되었습니다.');
+          return response.data.code;
+        })
+        .then((status) => {
+          if (status === 200) getBoardInfo();
         })
         .catch(() => {
           console.error('삭제오류');
@@ -102,11 +121,13 @@ const BoardDetail = () => {
     console.log('commentId', commentId);
     const shouldDelete = window.confirm('정말로 수정하시겠습니까?');
     if (shouldDelete) {
+      setEditMode(true);
       console.log('수정');
       setCommetText(commentContent);
       setSendCommetId(commentId);
     }
   };
+
   // API 데이터를 로컬 상태로 동기화
   useEffect(() => {
     setBoardData(data);
@@ -241,7 +262,7 @@ const BoardDetail = () => {
             style={{
               width: 'auto', height: '3rem', margin: '2rem auto', padding: '0.5rem 2rem', display: 'block',
             }}
-            onClick={() => {}}
+            onClick={() => { navigate('/board'); }}
           >
             목록으로 이동
           </FillButton>
@@ -366,18 +387,33 @@ const BoardDetail = () => {
             }}
             onChange={handleCommentText}
           />
-          <MyButton
-            onClick={handleRegistComment}
-            type="button"
-            style={{
-              display: 'inline-block',
-              width: '5%',
-              height: '10rem',
-              padding: '0.5rem',
-            }}
-          >
-            등록
-          </MyButton>
+          {editMode ? (
+            <MyButton
+              onClick={handleEditComment}
+              type="button"
+              style={{
+                display: 'inline-block',
+                width: '5%',
+                height: '10rem',
+                padding: '0.5rem',
+              }}
+            >
+              수정
+            </MyButton>
+          ) : (
+            <MyButton
+              onClick={handleRegistComment}
+              type="button"
+              style={{
+                display: 'inline-block',
+                width: '5%',
+                height: '10rem',
+                padding: '0.5rem',
+              }}
+            >
+              등록
+            </MyButton>
+          )}
         </div>
       </div>
 
