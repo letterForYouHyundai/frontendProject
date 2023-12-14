@@ -39,7 +39,7 @@ const BoardDetail = () => {
   const [editMode, setEditMode] = useState(false);
 
   const getBoardInfo = async () => {
-    const response = await axios.get(`/board/${id}`);
+    const response = await axios.get(`/api/board/${id}`);
     if (response.data.code === 200) {
       setBoardData({ ...response.data.result });
     }
@@ -47,7 +47,7 @@ const BoardDetail = () => {
 
   const handleClickLike = async () => {
     try {
-      const response = await axios.post(`/board/likes/${id}`, { boardNo: id });
+      const response = await axios.post(`/api/board/likes/${id}`, { boardNo: id });
       if (response.data.code === 200) {
         // 로컬 상태 업데이트
         if (response.data.result?.boardDTO?.likeYn === 'Y') {
@@ -64,7 +64,7 @@ const BoardDetail = () => {
   };
 
   const handleRegistComment = async () => {
-    const response = await axios.post('/board/comment', { boardNo: id, commentContent: commetText });
+    const response = await axios.post('/api/board/comment', { boardNo: id, commentContent: commetText });
     if (response.data.code === 200) {
       setCommetText('');
       getBoardInfo();
@@ -76,7 +76,7 @@ const BoardDetail = () => {
     editData.commentId = sendCommetId;
     editData.commentContent = commetText;
     // POST 요청 보내기
-    axios.post(`/board/comment/${sendCommetId}`, editData)
+    axios.post(`/api/board/comment/${sendCommetId}`, editData)
       .then((response) => {
         console.log('댓글이 성공적으로 수정되었습니다.', response.data);
         return response.data.code;
@@ -103,7 +103,7 @@ const BoardDetail = () => {
   const deleteComment = (e) => {
     const shouldDelete = window.confirm('정말 삭제하시겠습니까?');
     if (shouldDelete) {
-      axios.put(`/board/comment/${e}`)
+      axios.put(`/api/board/comment/${e}`)
         .then((response) => {
           console.log('삭제가 확인되었습니다.');
           return response.data.code;
