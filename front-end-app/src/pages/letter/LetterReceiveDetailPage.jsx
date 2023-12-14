@@ -13,7 +13,7 @@ const LetterReceiveDetailPage = () => {
   const [userName, setUserName] = useState('User');
   const [content, setContent] = useState('Content입니당');
   const [title, setTitle] = useState('제목입니당');
-  const currentURL = window.location.href;
+  const [currentURL, setCurrentURL] = useState('');
   const [apiCall, setApiCall] = useState({
     url: '',
     method: 'GET',
@@ -22,10 +22,6 @@ const LetterReceiveDetailPage = () => {
     useNav: false,
   });
   const { data, loading, error } = useApi({ ...apiCall });
-
-  const readLetterData = () => {
-    setApiCall({ ...apiCall, url: `/letter/receive/${letterNo}` });
-  };
 
   const [colorInfo, setColorInfo] = useState({
     name: '',
@@ -36,11 +32,29 @@ const LetterReceiveDetailPage = () => {
   const handleBack = () => {
     navigate(-1);
   };
+  const readLetterData = () => {
+    let urlToSet = `/letter/receive/${letterNo}`;
+
+    if (letterNo === null || letterNo === undefined) {
+      // letterNo is null or undefined, so use currentURL
+      urlToSet = `/letter/receive/${currentURL}`;
+    }
+    console.log(`urlToSet: ${urlToSet}`);
+    setApiCall({ ...apiCall, url: urlToSet });
+  };
+  useEffect(() => {
+    if (letterNo === null) {
+      const fullPath = window.location.href;
+      const baseURL = `${process.env.REACT_APP_RCV_BASE_URL}`;
+      const key = fullPath.replace(baseURL, '');
+      setCurrentURL(key);
+    }
+  }, []);
 
   useEffect(() => {
-    console.log(`letterNo : ${letterNo}`);
     readLetterData();
-  }, []);
+  }, [currentURL]);
+
   useEffect(() => {
     if (data != null || data === undefined) {
       console.log(data);
