@@ -49,8 +49,8 @@ const LetterRegistPage = () => {
       return;
     }
     // 보내는 대상의 이름을 입력해주세요.
-    if (!userName === null) {
-      alert('보내는 대상의 이름을 입력해주세요.');
+    if (!userName.trim()) {
+      alert('보내는 대상의 별칭을 입력해주세요.');
       return;
     }
 
@@ -151,6 +151,7 @@ const LetterRegistPage = () => {
   const handleUserText = (e) => {
     const { value } = e.target;
     setUserName(value);
+    console.log(value);
   };
 
   const handlePickerClick = (cInfo) => {
