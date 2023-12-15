@@ -14,7 +14,7 @@ const LetterReceiveListPage = () => {
 
   useEffect(() => {
     if (error) {
-      console.error('Error fetching letters:', error);
+      console.error('받은 편지 리스트 Fetching 오류', error);
     }
   }, [error]);
 
@@ -23,7 +23,7 @@ const LetterReceiveListPage = () => {
   };
 
   if (isLoading) return <p>Loading...</p>;
-  if (!letterData) return <p>No data available</p>;
+  if (!letterData) return <p>데이터 로딩 불가</p>;
 
   return (
     <>
