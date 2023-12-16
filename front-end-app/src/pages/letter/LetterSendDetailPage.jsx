@@ -59,8 +59,7 @@ const LetterSendDetailPage = () => {
     <>
       <Page.TitleText>보낸 편지함</Page.TitleText>
       <LetterTemplate from title={title} content={content} userName={userName} colorInfo={colorInfo} regist={false} />
-
-      {/* <button type="button" onClick={handleBack}>편지 목록으로 이동</button> */}
+      <div style={{ width: '100%', height: '10rem', background: 'none' }} />
     </>
   );
 };

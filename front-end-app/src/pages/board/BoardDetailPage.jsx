@@ -203,7 +203,7 @@ const BoardDetail = () => {
               </div>
             </div>
           </div>
-          <div
+          <pre
             className="txt2"
             style={{
               color: 'black',
@@ -217,7 +217,7 @@ const BoardDetail = () => {
             }}
           >
             {boardData?.boardContent}
-          </div>
+          </pre>
           {boardData?.attachList?.map((attach, idx) => (
             <img
               style={{
@@ -316,6 +316,8 @@ const BoardDetail = () => {
                     fontFamily: 'namum-myeongjo-regular',
                     fontWeight: '400',
                     wordWrap: 'break-word',
+                    display: 'flex',
+                    flexDirection: 'column',
                   }}
                 >
                   {cmmt?.userNickname}
@@ -350,7 +352,7 @@ const BoardDetail = () => {
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', marginRight: '1rem' }}>
-                <div style={{
+                <pre style={{
                   margin: '0.3rem 0.5rem',
                   fontSize: '1rem',
                   fontFamily: 'namum-myeongjo-regular',
@@ -359,7 +361,7 @@ const BoardDetail = () => {
                 }}
                 >
                   {cmmt?.commentContent}
-                </div>
+                </pre>
               </div>
             </div>
           </div>
