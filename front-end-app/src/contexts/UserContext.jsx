@@ -14,7 +14,6 @@ const UserProvider = ({ children }) => {
   }), [userInfo]);
 
   useEffect(() => {
-    // Make the Axios request when the component mounts
     axios.get('/api/common/checkLoginYn')
       .then((response) => {
         if (response.data.result != null) {
