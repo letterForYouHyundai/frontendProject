@@ -22,7 +22,6 @@ const LogoutPage = () => {
 
   useEffect(() => {
     if (data != null || data === undefined) {
-      console.log(data);
       console.log('로그아웃 성공');
       setUserInfo(null);
     }

@@ -4,7 +4,6 @@ import useApi from 'hooks/useApi';
 
 import * as Page from 'styles/pages/LetterViewPageStyles';
 import LetterMiniTemplate from 'components/letter/LetterMiniTemplate';
-import Pagination from 'components/commons/Pagination';
 import LoadingSpinner from 'components/commons/LoadingSpinner';
 
 const LetterSendListPage = () => {
@@ -40,7 +39,6 @@ const LetterSendListPage = () => {
           />
         ))}
       </Page.PageTemplate>
-      {/* <Pagination count={letterData.pagination.totalPageCount} /> */}
     </>
   );
 };

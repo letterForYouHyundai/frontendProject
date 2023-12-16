@@ -39,7 +39,6 @@ const LetterReceiveDetailPage = () => {
       // letterNo is null or undefined, so use currentURL
       urlToSet = `/letter/receive/${currentURL}`;
     }
-    console.log(`urlToSet: ${urlToSet}`);
     setApiCall({ ...apiCall, url: urlToSet });
   };
   useEffect(() => {
@@ -57,7 +56,6 @@ const LetterReceiveDetailPage = () => {
 
   useEffect(() => {
     if (data != null || data === undefined) {
-      console.log(data);
       setTitle(data.letterDTO.letterTitle);
       setContent(data.letterDTO.letterContent);
       setUserName(data.letterDTO.userAlias);

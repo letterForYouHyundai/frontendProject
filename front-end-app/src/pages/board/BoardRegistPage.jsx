@@ -33,20 +33,17 @@ const BoardRegistPage = () => {
     images.forEach((image, index) => {
       formData.append('multipartFiles', image);
     });
-    // console.log(formData);
     setApiCall({
       url: '/board/register',
       method: 'POST',
       body: formData,
-      // headers: { 'Content-Type': 'multipart/form-data' },
       headers: null,
     });
   };
 
   useEffect(() => {
     if (error) {
-      console.log('error');
-      console.log(error);
+      console.error(error);
     } else if (data) {
       // 게시글 상세로 이동~!
       navigate('/board');

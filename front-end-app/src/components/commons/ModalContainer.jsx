@@ -27,28 +27,25 @@ const customModalStyles = {
   },
 };
 
-const ModalContainer = ({ children, modalOpen, onClose }) => {
-  console.log('modal open');
-  return (
-    <Modal
-      isOpen={modalOpen}
-      onRequestClose={onClose}
-      style={customModalStyles}
-      contentLabel="Pop up Message"
-      shouldCloseOnOverlayClick
+const ModalContainer = ({ children, modalOpen, onClose }) => (
+  <Modal
+    isOpen={modalOpen}
+    onRequestClose={onClose}
+    style={customModalStyles}
+    contentLabel="Pop up Message"
+    shouldCloseOnOverlayClick
+  >
+    <button
+      type="button"
+      style={{
+        border: 'none', float: 'right', padding: '0.5rem',
+      }}
+      onClick={onClose}
     >
-      <button
-        type="button"
-        style={{
-          border: 'none', float: 'right', padding: '0.5rem',
-        }}
-        onClick={onClose}
-      >
-        X
-      </button>
-      {children}
-    </Modal>
-  );
-};
+      X
+    </button>
+    {children}
+  </Modal>
+);
 
 export default ModalContainer;

@@ -15,8 +15,6 @@ import { UserContext } from 'contexts/UserContext';
 const BoardDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { userInfo } = useContext(UserContext);
-  const [modalOpen, setModalOpen] = React.useState(false);
 
   const [apiCall, setApiCall] = useState({
     url: `/board/${id}`,
@@ -118,11 +116,9 @@ const BoardDetail = () => {
   };
 
   const editCommentFrm = (commentId, commentContent) => {
-    console.log('commentId', commentId);
     const shouldDelete = window.confirm('정말로 수정하시겠습니까?');
     if (shouldDelete) {
       setEditMode(true);
-      console.log('수정');
       setCommetText(commentContent);
       setSendCommetId(commentId);
     }
