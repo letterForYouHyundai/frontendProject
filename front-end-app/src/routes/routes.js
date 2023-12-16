@@ -14,6 +14,7 @@ const routes = [
   { path: '/board', component: Board.BoardListPage }, // 홈페이지, 자유게시판 리스트
   { path: '/board/:id', component: Board.BoardDetailPage }, // 자유게시판 상세보기
   { path: '/board/regist', component: Board.BoardRegistPage }, // 자유게시판 글쓰기
+  { path: '/board/update', component: Board.BoardUpdatePage }, // 자유게시판 게시글 수정
 
   { path: '/letter/regist', component: Letter.LetterRegistPage }, // 편지 작성
   { path: '/letter/complete', component: Letter.LetterCompleteRegistPage }, // 편지 작성 완료

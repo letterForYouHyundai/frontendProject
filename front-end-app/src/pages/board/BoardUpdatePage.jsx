@@ -4,17 +4,19 @@ import * as Page from 'styles/pages/LetterViewPageStyles';
 import Button from 'components/commons/Button';
 import * as BoardRegist from 'styles/pages/BoardRegistPageStyles';
 import useApi from 'hooks/useApi';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-const BoardRegistPage = () => {
+const BoardUpdatePage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const boardNo = location?.state?.boardNo;
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [images, setImages] = useState([]); // 여러 이미지를 저장할 배열
   const [imagePreviews, setImagePreviews] = useState([]);
   const [apiCall, setApiCall] = useState({
-    url: '',
-    method: 'POST',
+    url: boardNo ? `/board/${boardNo}` : '',
+    method: 'GET',
     body: null,
     headers: null,
   });
@@ -28,13 +30,15 @@ const BoardRegistPage = () => {
       boardTitle: title,
       boardContent: content,
     });
-    formData.append('boardDTO', new Blob([boardDTO], { type: 'application/json' }));
 
+    formData.append('boardDTO', new Blob([boardDTO], { type: 'application/json' }));
+    formData.append('boardNo', boardNo);
     images.forEach((image, index) => {
       formData.append('multipartFiles', image);
     });
+
     setApiCall({
-      url: '/board/register',
+      url: `/board/${boardNo}`,
       method: 'POST',
       body: formData,
       headers: null,
@@ -42,13 +46,23 @@ const BoardRegistPage = () => {
   };
 
   useEffect(() => {
-    if (error) {
-      console.error(error);
-    } else if (data) {
-      // 게시글 상세로 이동~!
-      navigate('/board');
+    if (apiCall.method === 'POST') {
+      if (error) {
+        console.error(error);
+      } else if (data) {
+        // 수정된 게시글 상세로 이동~!
+        navigate(`/board/${boardNo}`);
+      }
     }
   }, [data, error]);
+
+  useEffect(() => {
+    if (data) {
+      setTitle(data?.boardTitle);
+      setContent(data?.boardContent);
+      setImagePreviews(data?.attachList);
+    }
+  }, [data]);
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files).slice(0, 2); // 최대 2개의 이미지만 선택
@@ -59,7 +73,7 @@ const BoardRegistPage = () => {
 
   return (
     <>
-      <Page.TitleText>게시글 등록</Page.TitleText>
+      <Page.TitleText>게시글 수정</Page.TitleText>
       <BoardRegist.FormContainer>
         <form>
           <BoardRegist.Input
@@ -73,7 +87,6 @@ const BoardRegistPage = () => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
-          {/* <BoardRegist.Input type="file" onChange={handleImageChange} /> */}
           <BoardRegist.Input
             type="file"
             accept="image/*"
@@ -82,11 +95,14 @@ const BoardRegistPage = () => {
             id="image-upload"
             style={{ display: 'none' }}
             name="image-upload"
+            files={images}
           />
 
           <div style={{ margin: 'auto', width: '70%', padding: '1rem' }}>
             <div style={{ margin: '1rem' }}>
-              <label htmlFor="image-upload" style={{ padding: '0.5rem', border: '1px black solid' }}>사진 첨부 ( 2MB 이하 ), 최대 2장</label>
+              <label htmlFor="image-upload" style={{ padding: '0.5rem', border: '1px black solid' }}>
+                사진 첨부 ( 2MB 이하 ), 최대 2장
+              </label>
             </div>
             {imagePreviews?.map((preview, index) => (
               preview && <BoardRegist.ImagePreview key={index} src={preview} alt={`Image preview ${index + 1}`} />
@@ -100,13 +116,12 @@ const BoardRegistPage = () => {
             onClick={handleSubmit}
             buttonStyle="fill"
           >
-            게시하기
+            수정하기
           </Button>
         </form>
       </BoardRegist.FormContainer>
-
     </>
   );
 };
 
-export default BoardRegistPage;
+export default BoardUpdatePage;

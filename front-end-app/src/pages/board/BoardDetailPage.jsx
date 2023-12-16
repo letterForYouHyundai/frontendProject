@@ -1,6 +1,6 @@
 // BoardDetail.js
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useApi from 'hooks/useApi';
 import * as Page from 'styles/pages/LetterViewPageStyles';
@@ -10,7 +10,6 @@ import LoadingSpinner from 'components/commons/LoadingSpinner';
 import HeartIcon from 'assets/image/icons/heart.png';
 import BHeartIcon from 'assets/image/icons/bheart.png';
 import axios from 'axios';
-import { UserContext } from 'contexts/UserContext';
 
 const BoardDetail = () => {
   const { id } = useParams();
@@ -124,6 +123,35 @@ const BoardDetail = () => {
     }
   };
 
+  const handleUpdateBoard = () => {
+    const updateCheck = window.confirm('게시글을 수정하시겠습니까?');
+    if (updateCheck) {
+      navigate('/board/update', { state: { boardNo: id } });
+    }
+  };
+
+  const handleDeleteBoard = () => {
+    const deleteCheck = window.confirm('게시글을 삭제하시겠습니까?');
+    if (deleteCheck) {
+      // call delete api
+      axios.put(`/api/board/${id}`, { boardNo: id })
+        .then((response) => {
+          console.log('삭제가 확인되었습니다.');
+          return response.data.code;
+        })
+        .then((status) => {
+          if (status === 200) {
+            navigate('/board');
+            window.alert('게시글이 삭제됐습니다');
+          }
+        })
+        .catch(() => {
+          console.error('삭제오류');
+          window.alert('삭제에 실패했습니다...');
+        });
+    }
+  };
+
   // API 데이터를 로컬 상태로 동기화
   useEffect(() => {
     setBoardData(data);
@@ -152,6 +180,12 @@ const BoardDetail = () => {
         >
           {boardData?.boardTitle}
         </div>
+        {boardData?.isWriter === 'Y' && (
+        <div style={{ display: 'flex', justifyContent: 'end' }}>
+          <MyButton style={{ width: 'auto', height: 'auto' }} onClick={handleUpdateBoard}>수정</MyButton>
+          <MyButton style={{ width: 'auto', height: 'auto' }} onClick={handleDeleteBoard}>삭제</MyButton>
+        </div>
+        )}
         <div style={{ minHeight: '30.75rem', margin: '2rem auto', width: '100%' }}>
           <div style={{
             display: 'flex',
