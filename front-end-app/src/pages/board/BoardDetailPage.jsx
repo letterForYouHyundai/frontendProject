@@ -154,8 +154,13 @@ const BoardDetail = () => {
 
   // API 데이터를 로컬 상태로 동기화
   useEffect(() => {
-    setBoardData(data);
-  }, [data]);
+    if (error) {
+      navigate('/board');
+      window.alert(error?.response?.data?.error?.message);
+    } else {
+      setBoardData(data);
+    }
+  }, [data, error]);
 
   useEffect(() => {
     setBoardLike(boardData?.likeYn);
